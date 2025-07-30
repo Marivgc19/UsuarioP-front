@@ -1,0 +1,196 @@
+/* Inherits .modal-overlay from ChatSupportModal.css */
+
+.tracking-modal-content {
+    background-color: var(--card-background);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 700px; /* Adjust max-width as needed */
+    max-height: 80vh; /* Allow scrolling if many orders */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.tracking-header {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 15px 25px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.tracking-icon-header {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+/* Close button style is shared with chat modal */
+.close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: transform 0.2s ease;
+}
+
+.close-button:hover {
+    transform: rotate(90deg);
+}
+
+.search-section {
+    padding: 25px;
+    background-color: #f5f8fc; /* Slightly off-white for search background */
+    border-bottom: 1px solid #eee;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 12px 18px;
+    border: 1px solid #ddd;
+    border-radius: 30px; /* More rounded search input */
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.2);
+}
+
+.search-button {
+    background: linear-gradient(90deg, #44acd2 0%, #6699ff 100%); 
+    color: white;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.search-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.order-list {
+    flex-grow: 1;
+    padding: 25px;
+    overflow-y: auto; /* Enable scrolling for order list */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-card {
+    background-color: #fbfdff; /* Very light blue/white for order cards */
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid var(--status-color); /* Dynamic border color */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-id {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.order-status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-details {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.progress-bar-container {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Responsive adjustments for Tracking Modal */
+@media (max-width: 768px) {
+    .tracking-modal-content {
+        width: 95%;
+    }
+    .tracking-header {
+        font-size: 1.1rem;
+        padding: 12px 20px;
+    }
+    .search-section {
+        padding: 20px;
+    }
+    .search-input {
+        padding: 10px 15px;
+        font-size: 0.95rem;
+    }
+    .search-button {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+    }
+    .order-list {
+        padding: 20px;
+    }
+    .order-card {
+        padding: 18px;
+    }
+    .order-id {
+        font-size: 1rem;
+    }
+    .order-status {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tracking-modal-content {
+        height: 90vh; /* Taller on small screens */
+    }
+    .search-form {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .search-button {
+        width: 100%; /* Full width button */
+    }
+}

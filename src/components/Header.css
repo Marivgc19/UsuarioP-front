@@ -1,0 +1,87 @@
+.header {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.rocket-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    /* If it's an SVG, you might need fill: white; */
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+.logo-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 25px; /* More rounded for buttons */
+    transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.chat-button .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #4CAF50; /* Green dot */
+    border-radius: 50%;
+}
+
+.tracking-icon {
+    font-size: 1.2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        padding: 15px;
+    }
+    .logo-container {
+        margin-bottom: 15px;
+    }
+    .logo-subtitle {
+        display: none; /* Hide subtitle on smaller screens */
+    }
+    .nav-buttons {
+        width: 100%;
+        justify-content: space-around;
+    }
+    .nav-button {
+        flex: 1;
+        justify-content: center;
+        padding: 10px 15px;
+    }
+}
