@@ -1,87 +1,255 @@
+/* Estilos generales del header */
 .header {
-    background-color: var(--primary-blue);
-    color: white;
-    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 15px 30px; /* Padding para el header */
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    position: sticky; /* O fixed, dependiendo de tu diseño */
+    top: 0;
+    left: 0;
     width: 100%;
-    box-shadow: 0 4px 8px var(--shadow-color);
+    z-index: 999; /* Asegura que el header esté por encima de otros elementos */
 }
 
+/* Contenedor del logo */
 .logo-container {
     display: flex;
     align-items: center;
 }
 
 .rocket-icon {
-    width: 40px;
+    width: 40px; /* Tamaño del icono del cohete */
     height: 40px;
     margin-right: 10px;
-    /* If it's an SVG, you might need fill: white; */
+    color: var(--primary-blue); /* Asumiendo que puedes colorear el SVG */
 }
 
 .logo-text {
     font-size: 1.8rem;
     font-weight: 700;
-    margin-right: 10px;
+    color: var(--primary-blue); /* Color principal azul */
+    margin-right: 8px; /* Espacio entre el texto principal y el subtítulo */
 }
 
 .logo-subtitle {
     font-size: 0.9rem;
-    opacity: 0.8;
+    color: #666;
+    font-weight: 500;
 }
 
+/* Contenedor de los botones de navegación */
 .nav-buttons {
     display: flex;
-    gap: 15px;
+    gap: 15px; /* Espacio entre los botones */
 }
 
+/* Estilos base para los botones de navegación */
 .nav-button {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 8px;
     padding: 10px 20px;
-    border-radius: 25px; /* More rounded for buttons */
-    transition: background-color 0.3s ease;
+    border: none;
+    border-radius: 25px; /* Bordes redondeados */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex; /* Usamos flexbox para alinear el icono y el texto */
+    align-items: center; /* Centrar verticalmente */
+    justify-content: center; /* Centrar horizontalmente si solo hay un elemento */
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
 }
 
 .nav-button:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px); /* Efecto sutil al pasar el ratón */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos específicos para el botón de Chat Soporte */
+.chat-button {
+    background-color: var(--primary-blue); /* Color de fondo azul */
+    color: white;
 }
 
 .chat-button .dot {
+    display: inline-block;
     width: 8px;
     height: 8px;
-    background-color: #4CAF50; /* Green dot */
+    background-color: #4CAF50; /* Verde para el "online" */
     border-radius: 50%;
+    margin-right: 8px; /* Espacio entre el punto y el texto */
+    animation: pulse 1.5s infinite ease-in-out; /* Animación de pulsación */
 }
 
-.tracking-icon {
-    font-size: 1.2rem;
+/* Estilos específicos para el botón de Tracking */
+.tracking-button {
+    background-color: #f0f0f0; /* Fondo gris claro */
+    color: var(--primary-blue); /* Texto azul */
+    border: 1px solid #ddd; /* Borde sutil */
 }
 
-/* Responsive adjustments */
+/* ***** AJUSTE CLAVE PARA LA ANIMACIÓN LOTTIE DEL CAMIÓN ***** */
+/* El componente <Player> de react-lottie-player crea un div.
+   Asegúrate de que el style inline del Player { height: '24px', width: '24px', marginRight: '8px' }
+   esté establecido como en el JSX anterior. */
+
+/* Puedes añadir estilos adicionales si el Player necesita un contenedor específico o ajustes: */
+.tracking-button .lottie-player-container { /* Si envuelves el Player en un div, por ejemplo */
+    display: flex; /* Asegura que se comporte como flex item */
+    align-items: center; /* Para alineación vertical */
+    justify-content: center; /* Para alineación horizontal */
+    /* Otros estilos si es necesario, como margen */
+    margin-right: 8px; /* Ejemplo de margen, si no lo pones inline */
+}
+
+
+/* Animación para el punto del chat */
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 0.7;
+    }
+}
+
+/* Media Queries para Responsive Design */
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
-        padding: 15px;
+        align-items: flex-start;
+        padding: 10px 20px;
     }
-    .logo-container {
-        margin-bottom: 15px;
-    }
-    .logo-subtitle {
-        display: none; /* Hide subtitle on smaller screens */
-    }
+
     .nav-buttons {
+        margin-top: 15px;
         width: 100%;
-        justify-content: space-around;
+        justify-content: space-around; /* Distribuye los botones */
+        gap: 10px; /* Reduce el espacio entre botones */
+    }
+
+    .nav-button {
+        flex-grow: 1; /* Permite que los botones crezcan para ocupar el espacio */
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
+    }
+
+    .logo-subtitle {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 10px 15px;
+    }
+
+    .logo-text {
+        font-size: 1.3rem;
+    }
+
+    .logo-subtitle {
+        display: none; /* Oculta el subtítulo en pantallas muy pequeñas */
+    }
+
+    .nav-buttons {
+        flex-direction: column; /* Apila los botones */
+        gap: 10px;
     }
     .nav-button {
-        flex: 1;
-        justify-content: center;
-        padding: 10px 15px;
+        width: 100%; /* Ocupa todo el ancho disponible */
+        font-size: 0.9rem;
+    }
+    .rocket-icon {
+        width: 30px;
+        height: 30px;
+    }
+}
+/* ... (código CSS anterior del Header.css) ... */
+
+/* Estilos base para los botones de navegación */
+.nav-button {
+    padding: 12px 25px; /* Aumentado el padding para hacer el botón más grande */
+    border: none;
+    border-radius: 28px; /* Ligeramente más redondeado si el padding aumenta */
+    font-size: 1.05rem; /* Opcional: Aumentar un poco el tamaño de la fuente */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos específicos para el botón de Chat Soporte */
+.chat-button {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+.chat-button .dot {
+    display: inline-block;
+    width: 9px; /* Ligeramente más grande el punto */
+    height: 9px; /* Ligeramente más grande el punto */
+    background-color: #4CAF50;
+    border-radius: 50%;
+    margin-right: 9px; /* Ajustado el margen */
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Estilos específicos para el botón de Tracking */
+.tracking-button {
+    background-color: #f0f0f0;
+    color: var(--primary-blue);
+    border: 1px solid #ddd;
+}
+
+/* AJUSTE CLAVE PARA LA ANIMACIÓN LOTTIE DEL CAMIÓN */
+/* Aquí no hay cambios en el CSS, el tamaño se controla desde el JSX inline style */
+/* Asegúrate que en Header.js el style={{ height: '28px', width: '28px', marginRight: '10px' }}
+   del <Player> sea adecuado para el nuevo tamaño del botón.
+   Por ejemplo, podríamos aumentarlo a 28px o 30px. */
+
+
+/* ... (resto del código CSS de Header.css) ... */
+
+
+/* Media Queries para Responsive Design */
+@media (max-width: 768px) {
+    /* ... (resto de los estilos responsive) ... */
+
+    .nav-button {
+        padding: 10px 18px; /* Ajuste para pantallas medianas */
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* ... (resto de los estilos responsive) ... */
+
+    .nav-button {
+        padding: 9px 12px; /* Ajuste para pantallas pequeñas */
+        font-size: 0.85rem;
+    }
+    .chat-button .dot {
+        width: 7px;
+        height: 7px;
+        margin-right: 6px;
     }
 }

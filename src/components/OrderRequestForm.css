@@ -277,3 +277,15 @@
    to achieve the exact icon styling within the dropdown options.
    Native <select> options are hard to style with custom icons.
    For basic styling, the text will show the emoji. */
+
+/* Asegúrate de que tu contenedor de opción use flexbox para alinear */
+.checkbox-option .option-content {
+    display: flex;
+    align-items: center; /* Alinea los iconos y el texto verticalmente */
+    /* otros estilos como padding, gap, etc. */
+}
+/* Ajuste para los iconos de texto originales si los sigues usando en otras partes */
+.option-content .icon {
+    margin-right: 10px; /* Asegura espacio entre el icono y el texto */
+    font-size: 1.5rem; /* Ajusta el tamaño de los emojis si los mantienes */
+}

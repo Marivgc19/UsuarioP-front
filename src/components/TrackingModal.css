@@ -194,3 +194,39 @@
         width: 100%; /* Full width button */
     }
 }
+/* ... Tus estilos existentes ... */
+
+.tracking-header {
+    display: flex; /* Habilitar flexbox para alinear el icono y el texto */
+    align-items: center; /* Centrar verticalmente los elementos */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-blue, #3f51b5); /* Usa tu color primario si lo tienes definido */
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    position: relative; /* Para posicionar el botón de cierre */
+}
+
+/* Si necesitas ajustar más específicamente el contenedor del Lottie */
+.tracking-header .lottie-player-container { /* El Player de Lottie crea un div */
+    display: flex; /* Asegura que se alinee bien */
+    align-items: center;
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    /* Puedes añadir más estilos aquí si el Lottie necesita algún ajuste visual */
+}
+
+
+/* ... El resto de tus estilos de TrackingModal.css ... */
+
+/* Asegúrate de que tu close-button no esté afectando la alineación: */
+.close-button {
+    position: absolute; /* Posición absoluta para sacarlo del flujo normal */
+    top: 5px; /* Ajusta la posición superior */
+    right: 5px; /* Ajusta la posición derecha */
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #888;
+}

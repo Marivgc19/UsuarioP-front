@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import './TrackingModal.css';
+// Eliminamos la importación del Player de Lottie
+// import { Player } from '@lottiefiles/react-lottie-player';
+
+// Importa el archivo GIF directamente
+import packageGif from '../assets/lottie/package.gif'; // <--- Importa tu archivo GIF aquí
 
 function TrackingModal({ onClose }) {
     const [orderNumber, setOrderNumber] = useState('');
@@ -25,18 +30,21 @@ function TrackingModal({ onClose }) {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        // In a real app, you'd filter orders based on orderNumber
-        // For this example, we'll just log it.
         console.log('Searching for order:', orderNumber);
-        // You would typically make an API call here and update the 'orders' state
-        // with the search results.
     };
 
     return (
         <div className="modal-overlay">
             <div className="tracking-modal-content">
                 <div className="tracking-header">
-                    <span className="tracking-icon-header">📦</span> Tracking de Pedidos
+                    {/* Reemplazamos el Player de Lottie por la etiqueta <img> para el GIF */}
+                    <img
+                        src={packageGif} // Usamos el GIF importado
+                        alt="Tracking Icon" // Texto alternativo para accesibilidad
+                        style={{ height: '35px', width: '35px', marginRight: '10px' }} // Ajusta el tamaño y el margen
+                        className="tracking-gif-icon" // Añadimos una clase para posibles estilos CSS
+                    />
+                    Tracking de Pedidos
                     <button className="close-button" onClick={onClose}>&times;</button>
                 </div>
 
