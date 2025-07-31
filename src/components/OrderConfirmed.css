@@ -15,7 +15,7 @@
     width: 90px;
     height: 90px;
     /* This gradient simulates the confetti cone from the image */
-    background: linear-gradient(to top right, #ff8c00, #ffc0cb, #90ee90, #add8e6);
+    background: linear-gradient(to top right, #2d3a4a, #b2bec3, #f7fafd, #5f8fff);
     border-radius: 50%;
     display: flex;
     justify-content: center;
