@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './OrderRequestForm.css';
 import { Player } from '@lottiefiles/react-lottie-player';
+import CustomSelect from './CustomSelect'; // Importa el nuevo componente
 
 // Importa tus archivos Lottie
 import airPlaneLottie from '../assets/lottie/FTQoLAnxbj.json';
@@ -100,6 +101,12 @@ function OrderRequestForm({ onSubmitForm }) {
         return hoveredDeliveryOption === optionName || deliveryType === optionName;
     };
 
+    // Opciones para el nuevo CustomSelect
+    const deliveryOptions = [
+        { value: 'courier', label: 'Envío por Courier', icon: '🚚' },
+        { value: 'pickup', label: 'Retiro en Oficinas', icon: '🏢' },
+    ];
+
     return (
         <div className="order-request-card">
             <h2 className="card-title">Solicitud de Pedido</h2>
@@ -120,7 +127,6 @@ function OrderRequestForm({ onSubmitForm }) {
                                 value="link"
                                 checked={requestType === 'link'}
                                 onChange={() => setRequestType('link')}
-                                // Los radio buttons no necesitan 'required' aquí si se valida en handleSubmit
                             />
                             <div className="option-content">
                                 <Player
@@ -148,7 +154,6 @@ function OrderRequestForm({ onSubmitForm }) {
                                 value="photo"
                                 checked={requestType === 'photo'}
                                 onChange={() => setRequestType('photo')}
-                                // Los radio buttons no necesitan 'required' aquí si se valida en handleSubmit
                             />
                             <div className="option-content">
                                 <Player
@@ -177,7 +182,7 @@ function OrderRequestForm({ onSubmitForm }) {
                                 onChange={(e) => setProductUrl(e.target.value)}
                                 placeholder="https://ejemplo.com/producto"
                                 className="text-input"
-                                required // Campo requerido
+                                required
                             />
                         </div>
                     )}
@@ -194,8 +199,8 @@ function OrderRequestForm({ onSubmitForm }) {
                                     autoplay={isFolderHovered}
                                     loop={false}
                                     src={folderLottie}
-                                    className="delivery-lottie-icon"
-                                    style={{ height: '30px', width: '30px', marginRight: '10px' }}
+                                    className="delivery-lottie-icon-archivo"
+                                    style={{ height: '100px', width: '100px', marginRight: '10px' }}
                                 />
                                 <button type="button" className="select-image-button" onClick={() => document.getElementById('productImageInput').click()}>
                                     Seleccionar Imagen
@@ -206,8 +211,6 @@ function OrderRequestForm({ onSubmitForm }) {
                                     accept="image/jpeg, image/png"
                                     onChange={handleImageChange}
                                     style={{ display: 'none' }}
-                                    // El atributo 'required' en input type="file" puede ser problemático con botones personalizados,
-                                    // se maneja la validación en handleSubmit
                                 />
                                 {productImage && <span className="file-name">{productImage.name}</span>}
                                 <span className="file-info">JPG, PNG, máximo 5MB</span>
@@ -221,7 +224,7 @@ function OrderRequestForm({ onSubmitForm }) {
                                     placeholder="Describe el producto detalladamente..."
                                     className="textarea-input"
                                     rows="5"
-                                    required // Campo requerido
+                                    required
                                 ></textarea>
                             </div>
                         </div>
@@ -239,7 +242,7 @@ function OrderRequestForm({ onSubmitForm }) {
                             onChange={(e) => setQuantity(e.target.value)}
                             min="1"
                             className="text-input"
-                            required // Campo requerido
+                            required
                         />
                     </div>
                     <div className="form-group">
@@ -251,7 +254,7 @@ function OrderRequestForm({ onSubmitForm }) {
                             placeholder="Color, talla, modelo, características específicas, etc."
                             className="textarea-input"
                             rows="5"
-                            required // Campo requerido
+                            required
                         ></textarea>
                     </div>
 
@@ -268,7 +271,6 @@ function OrderRequestForm({ onSubmitForm }) {
                                 value="doorToWarehouse"
                                 checked={deliveryType === 'doorToWarehouse'}
                                 onChange={(e) => setDeliveryType(e.target.checked ? 'doorToWarehouse' : '')}
-                                // La validación se maneja en handleSubmit
                             />
                             <div className="option-content">
                                 <Player
@@ -293,7 +295,6 @@ function OrderRequestForm({ onSubmitForm }) {
                                 value="air"
                                 checked={deliveryType === 'air'}
                                 onChange={(e) => setDeliveryType(e.target.checked ? 'air' : '')}
-                                // La validación se maneja en handleSubmit
                             />
                             <div className="option-content">
                                 <Player
@@ -318,7 +319,6 @@ function OrderRequestForm({ onSubmitForm }) {
                                 value="maritime"
                                 checked={deliveryType === 'maritime'}
                                 onChange={(e) => setDeliveryType(e.target.checked ? 'maritime' : '')}
-                                // La validación se maneja en handleSubmit
                             />
                             <div className="option-content">
                                 <Player
@@ -335,18 +335,12 @@ function OrderRequestForm({ onSubmitForm }) {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="deliveryVenezuela">Entrega en Venezuela</label>
-                        <select
-                            id="deliveryVenezuela"
-                            value={deliveryVenezuela}
-                            onChange={(e) => setDeliveryVenezuela(e.target.value)}
-                            className="select-input"
-                            required // Campo requerido
-                        >
-                            <option value="">Seleccionar opción</option>
-                            <option value="courier">🚚 Envío por Courier</option>
-                            <option value="pickup">🏢 Retiro en Oficinas</option>
-                        </select>
+                        <CustomSelect
+                            label="Entrega en Venezuela"
+                            options={deliveryOptions}
+                            selectedValue={deliveryVenezuela}
+                            onSelect={setDeliveryVenezuela}
+                        />
                     </div>
                 </div>
 

@@ -4,7 +4,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px; /* Padding para el header */
-    background-color: #ffffff; /* Fondo blanco */
+    background-color: #2f80ed; /* Fondo blanco */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
     position: sticky; /* O fixed, dependiendo de tu diseño */
     top: 0;
@@ -29,13 +29,13 @@
 .logo-text {
     font-size: 1.8rem;
     font-weight: 700;
-    color: var(--primary-blue); /* Color principal azul */
+    color: #ffff; /* Color principal azul */
     margin-right: 8px; /* Espacio entre el texto principal y el subtítulo */
 }
 
 .logo-subtitle {
     font-size: 0.9rem;
-    color: #666;
+    color: #ffff;
     font-weight: 500;
 }
 
@@ -45,6 +45,10 @@
     gap: 15px; /* Espacio entre los botones */
 }
 
+.nav-button.chat-button {
+    background-color: #f0f0f0 !important;
+    color: var(--primary-blue); /* Opcional: cambia el color del texto si lo necesitas */
+}
 /* Estilos base para los botones de navegación */
 .nav-button {
     padding: 10px 20px;
