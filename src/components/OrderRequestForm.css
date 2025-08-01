@@ -302,3 +302,17 @@
     font-size: 1.2em;
     font-weight: bold;
 }
+
+.photo-description-section {
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, max-height 0.3s ease;
+}
+
+.photo-description-section.visible {
+    opacity: 1;
+    visibility: visible;
+    max-height: 500px; /* Ajusta este valor según el tamaño máximo esperado */
+}

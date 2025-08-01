@@ -11,7 +11,6 @@ function Header({ onOpenChat, onOpenTracking }) {
         <header className="header">
             <div className="logo-container">
                 <span className="logo-text">ImportaFácil</span>
-                <span className="logo-subtitle">Tu importadora de confianza</span>
             </div>
             <nav className="nav-buttons">
                 <button className="nav-button chat-button" onClick={onOpenChat}>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './OrderRequestForm.css';
 import { Player } from '@lottiefiles/react-lottie-player';
-import CustomSelect from './CustomSelect'; // Importa el nuevo componente
+import ShippingCarousel from './ShippingCarousel'; // Nuevo componente
+import DeliveryCarousel from './DeliveryCarousel'; // Nuevo componente
 
 // Importa tus archivos Lottie
 import airPlaneLottie from '../assets/lottie/FTQoLAnxbj.json';
@@ -21,10 +22,7 @@ function OrderRequestForm({ onSubmitForm }) {
     const [deliveryType, setDeliveryType] = useState('');
     const [deliveryVenezuela, setDeliveryVenezuela] = useState('');
 
-    // Estado para controlar qué opción de envío está en hover
     const [hoveredDeliveryOption, setHoveredDeliveryOption] = useState(null);
-
-    // Nuevos estados para controlar el hover de los iconos individuales
     const [isFolderHovered, setIsFolderHovered] = useState(false);
     const [isCameraHovered, setIsCameraHovered] = useState(false);
     const [isLinkHovered, setIsLinkHovered] = useState(false);
@@ -38,15 +36,11 @@ function OrderRequestForm({ onSubmitForm }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // --- Validaciones personalizadas para campos "requeridos" ---
-
-        // Validación para tipo de solicitud (Link o Foto + Descripción)
         if (!requestType) {
             alert('Por favor, selecciona cómo deseas solicitar tu producto (Link o Foto + Descripción).');
             return;
         }
 
-        // Validación condicional según el tipo de solicitud
         if (requestType === 'link' && !productUrl) {
             alert('Por favor, ingresa la URL del producto.');
             return;
@@ -63,25 +57,21 @@ function OrderRequestForm({ onSubmitForm }) {
             }
         }
         
-        // Validación para cantidad
         if (quantity < 1) {
             alert('La cantidad debe ser al menos 1.');
             return;
         }
 
-        // Validación para Tipo de Envío
         if (!deliveryType) {
             alert('Por favor, selecciona un tipo de envío.');
             return;
         }
 
-        // Validación para Entrega en Venezuela
         if (!deliveryVenezuela) {
             alert('Por favor, selecciona una opción de entrega en Venezuela.');
             return;
         }
 
-        // Si todas las validaciones pasan, procede con el envío
         console.log({
             requestType,
             productUrl: requestType === 'link' ? productUrl : null,
@@ -96,16 +86,9 @@ function OrderRequestForm({ onSubmitForm }) {
         onSubmitForm();
     };
 
-    // Función para determinar si una animación debe estar activa (en hover o seleccionada)
     const isActiveAnimation = (optionName) => {
         return hoveredDeliveryOption === optionName || deliveryType === optionName;
     };
-
-    // Opciones para el nuevo CustomSelect
-    const deliveryOptions = [
-        { value: 'courier', label: 'Envío por Courier', icon: '🚚' },
-        { value: 'pickup', label: 'Retiro en Oficinas', icon: '🏢' },
-    ];
 
     return (
         <div className="order-request-card">
@@ -187,48 +170,49 @@ function OrderRequestForm({ onSubmitForm }) {
                         </div>
                     )}
 
-                    {requestType === 'photo' && (
-                        <div className="photo-description-section" style={{ marginTop: '20px' }}>
-                            <div
-                                className="image-upload-area"
-                                onMouseEnter={() => setIsFolderHovered(true)}
-                                onMouseLeave={() => setIsFolderHovered(false)}
-                            >
-                                <Player
-                                    key={isFolderHovered ? 'folder-active' : 'folder-inactive'}
-                                    autoplay={isFolderHovered}
-                                    loop={false}
-                                    src={folderLottie}
-                                    className="delivery-lottie-icon-archivo"
-                                    style={{ height: '100px', width: '100px', marginRight: '10px' }}
-                                />
-                                <button type="button" className="select-image-button" onClick={() => document.getElementById('productImageInput').click()}>
-                                    Seleccionar Imagen
-                                </button>
-                                <input
-                                    type="file"
-                                    id="productImageInput"
-                                    accept="image/jpeg, image/png"
-                                    onChange={handleImageChange}
-                                    style={{ display: 'none' }}
-                                />
-                                {productImage && <span className="file-name">{productImage.name}</span>}
-                                <span className="file-info">JPG, PNG, máximo 5MB</span>
-                            </div>
-                            <div className="form-group" style={{ marginTop: '20px' }}>
-                                <label htmlFor="productDescription">Descripción del Producto</label>
-                                <textarea
-                                    id="productDescription"
-                                    value={productDescription}
-                                    onChange={(e) => setProductDescription(e.target.value)}
-                                    placeholder="Describe el producto detalladamente..."
-                                    className="textarea-input"
-                                    rows="5"
-                                    required
-                                ></textarea>
-                            </div>
+                    <div
+                        className={`photo-description-section ${requestType === 'photo' ? 'visible' : ''}`}
+                        style={{ marginTop: '20px' }}
+                    >
+                        <div
+                            className="image-upload-area"
+                            onMouseEnter={() => setIsFolderHovered(true)}
+                            onMouseLeave={() => setIsFolderHovered(false)}
+                        >
+                            <Player
+                                key={isFolderHovered ? 'folder-active' : 'folder-inactive'}
+                                autoplay={isFolderHovered}
+                                loop={false}
+                                src={folderLottie}
+                                className="delivery-lottie-icon-archivo"
+                                style={{ height: '100px', width: '100px', marginRight: '10px' }}
+                            />
+                            <button type="button" className="select-image-button" onClick={() => document.getElementById('productImageInput').click()}>
+                                Seleccionar Imagen
+                            </button>
+                            <input
+                                type="file"
+                                id="productImageInput"
+                                accept="image/jpeg, image/png"
+                                onChange={handleImageChange}
+                                style={{ display: 'none' }}
+                            />
+                            {productImage && <span className="file-name">{productImage.name}</span>}
+                            <span className="file-info">JPG, PNG, máximo 5MB</span>
                         </div>
-                    )}
+                        <div className="form-group" style={{ marginTop: '20px' }}>
+                            <label htmlFor="productDescription">Descripción del Producto</label>
+                            <textarea
+                                id="productDescription"
+                                value={productDescription}
+                                onChange={(e) => setProductDescription(e.target.value)}
+                                placeholder="Describe el producto detalladamente..."
+                                className="textarea-input"
+                                rows="5"
+                                required
+                            ></textarea>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="form-section">
@@ -258,90 +242,15 @@ function OrderRequestForm({ onSubmitForm }) {
                         ></textarea>
                     </div>
 
-                    <h3>Tipo de Envío</h3>
-                    <div className="checkbox-group">
-                        <label
-                            className={`checkbox-option ${deliveryType === 'doorToWarehouse' ? 'selected' : ''}`}
-                            onMouseEnter={() => setHoveredDeliveryOption('doorToWarehouse')}
-                            onMouseLeave={() => setHoveredDeliveryOption(null)}
-                        >
-                            <input
-                                type="checkbox"
-                                name="deliveryType"
-                                value="doorToWarehouse"
-                                checked={deliveryType === 'doorToWarehouse'}
-                                onChange={(e) => setDeliveryType(e.target.checked ? 'doorToWarehouse' : '')}
-                            />
-                            <div className="option-content">
-                                <Player
-                                    key={isActiveAnimation('doorToWarehouse') ? 'box-active' : 'box-inactive'}
-                                    autoplay={isActiveAnimation('doorToWarehouse')}
-                                    loop={true}
-                                    src={woodenBoxLottie}
-                                    className="delivery-lottie-icon"
-                                    style={{ height: '30px', width: '30px', marginRight: '10px' }}
-                                />
-                                <span className="option-title">Puerta a Puerta (a nuestro almacén)</span>
-                            </div>
-                        </label>
-                        <label
-                            className={`checkbox-option ${deliveryType === 'air' ? 'selected' : ''}`}
-                            onMouseEnter={() => setHoveredDeliveryOption('air')}
-                            onMouseLeave={() => setHoveredDeliveryOption(null)}
-                        >
-                            <input
-                                type="checkbox"
-                                name="deliveryType"
-                                value="air"
-                                checked={deliveryType === 'air'}
-                                onChange={(e) => setDeliveryType(e.target.checked ? 'air' : '')}
-                            />
-                            <div className="option-content">
-                                <Player
-                                    key={isActiveAnimation('air') ? 'airplane-active' : 'airplane-inactive'}
-                                    autoplay={isActiveAnimation('air')}
-                                    loop={true}
-                                    src={airPlaneLottie}
-                                    className="delivery-lottie-icon"
-                                    style={{ height: '30px', width: '30px', marginRight: '10px' }}
-                                />
-                                <span className="option-title">Envío Aéreo</span>
-                            </div>
-                        </label>
-                        <label
-                            className={`checkbox-option ${deliveryType === 'maritime' ? 'selected' : ''}`}
-                            onMouseEnter={() => setHoveredDeliveryOption('maritime')}
-                            onMouseLeave={() => setHoveredDeliveryOption(null)}
-                        >
-                            <input
-                                type="checkbox"
-                                name="deliveryType"
-                                value="maritime"
-                                checked={deliveryType === 'maritime'}
-                                onChange={(e) => setDeliveryType(e.target.checked ? 'maritime' : '')}
-                            />
-                            <div className="option-content">
-                                <Player
-                                    key={isActiveAnimation('maritime') ? 'ship-active' : 'ship-inactive'}
-                                    autoplay={isActiveAnimation('maritime')}
-                                    loop={true}
-                                    src={cargoShipLottie}
-                                    className="delivery-lottie-icon"
-                                    style={{ height: '30px', width: '30px', marginRight: '10px' }}
-                                />
-                                <span className="option-title">Envío Marítimo</span>
-                            </div>
-                        </label>
-                    </div>
+                    <ShippingCarousel
+                        selectedValue={deliveryType}
+                        onSelect={setDeliveryType}
+                    />
 
-                    <div className="form-group">
-                        <CustomSelect
-                            label="Entrega en Venezuela"
-                            options={deliveryOptions}
-                            selectedValue={deliveryVenezuela}
-                            onSelect={setDeliveryVenezuela}
-                        />
-                    </div>
+                    <DeliveryCarousel
+                        selectedValue={deliveryVenezuela}
+                        onSelect={setDeliveryVenezuela}
+                    />
                 </div>
 
                 <button type="submit" className="submit-button">

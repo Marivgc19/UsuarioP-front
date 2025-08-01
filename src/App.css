@@ -30,17 +30,18 @@ body {
     justify-content: center;
     align-items: flex-start;
     padding-bottom: 50px;
+    margin: 0;
 }
 
 #root {
     width: 100%;
-    max-width: 1200px;
 }
 
 .App {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    width: 100% ;
 }
 
 .main-content {
@@ -72,3 +73,4 @@ button {
     font-weight: 600;
     transition: background-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
 }
+
