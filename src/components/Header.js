@@ -3,6 +3,7 @@ import './Header.css';
 import { Player } from '@lottiefiles/react-lottie-player';
 import truckAnimation from '../assets/lottie/wired-lineal-497-truck-delivery-loop-cycle.json';
 
+import logoImage from '../assets/lottie/logo.png';
 
 function Header({ onOpenChat, onOpenTracking }) {
     const [isTruckHovered, setIsTruckHovered] = useState(false);
@@ -10,7 +11,8 @@ function Header({ onOpenChat, onOpenTracking }) {
     return (
         <header className="header">
             <div className="logo-container">
-                <span className="logo-text">ImportaFácil</span>
+                <img src={logoImage} alt="Logo de ImportaFácil" className="logo-image" />
+                <span className="logo-text">PitaExpress</span>
             </div>
             <nav className="nav-buttons">
                 <button className="nav-button chat-button" onClick={onOpenChat}>

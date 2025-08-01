@@ -4,7 +4,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px; /* Padding para el header */
-    background-color: #2f80ed; /* Fondo blanco */
+    background-color: #202841 ; /* Fondo blanco */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
     position: sticky; /* O fixed, dependiendo de tu diseño */
     top: 0;
@@ -13,6 +13,7 @@
     z-index: 999; /* Asegura que el header esté por encima de otros elementos */
 
 }
+
 
 /* Contenedor del logo */
 .logo-container {
@@ -27,10 +28,20 @@
     color: var(--primary-blue); /* Asumiendo que puedes colorear el SVG */
 }
 
+/* Estilos para el nuevo logo */
+.logo-image {
+    height: 60px; /* Ajusta el tamaño según lo necesites */
+    width: 60px; /* Asegura que el ancho sea igual al alto para formar un círculo */
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    object-fit: cover; /* Recorta la imagen para que se ajuste al círculo */
+    margin-right: 15px; /* Espacio entre el logo y el texto */
+    background-color: #a5a4a4; /* Agrega un fondo gris claro */
+}
+
 .logo-text {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #ffff; /* Color principal azul */
+    color: #ee3c23; /* Color principal azul */
     margin-right: 8px; /* Espacio entre el texto principal y el subtítulo */
 }
 
