@@ -203,23 +203,6 @@
     font-size: 1.2rem;
 }
 
-/* Specific button colors (as seen in image, if applicable) */
-.action-button.simulate-reception {
-    /* Background matches image's 'Simular Recepción' button color. */
-    background: linear-gradient(45deg, #4CAF50, #81C784); /* Green */
-}
-.action-button.simulate-reception:hover {
-    background: linear-gradient(45deg, #388E3C, #66BB6A);
-}
-
-.action-button.simulate-delivery {
-    /* Background matches image's 'Simular Entrega' button color. */
-    background: linear-gradient(45deg, #2196F3, #64B5F6); /* Blue */
-}
-.action-button.simulate-delivery:hover {
-    background: linear-gradient(45deg, #1976D2, #42A5F5);
-}
-
 .action-button.survey {
     /* Background matches image's 'Encuesta' button color. */
     background: linear-gradient(45deg, #FF9800, #FFB74D); /* Orange */

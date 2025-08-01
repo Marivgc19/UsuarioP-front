@@ -61,12 +61,6 @@ function OrderTracking({ orderId, onOpenSurvey }) { // Added onOpenSurvey prop
             </div>
 
             <div className="tracking-actions">
-                <button className="action-button simulate-reception">
-                    <span className="button-icon">📦</span> Simular Recepción
-                </button>
-                <button className="action-button simulate-delivery">
-                    <span className="button-icon">🚚</span> Simular Entrega
-                </button>
                 <button className="action-button survey" onClick={onOpenSurvey}> {/* Added onClick handler */}
                     <span className="button-icon">📝</span> Encuesta
                 </button>
