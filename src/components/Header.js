@@ -11,7 +11,7 @@ function Header({ onOpenChat, onOpenTracking }) {
     return (
         <header className="header">
             <div className="logo-container">
-                <img src={logoImage} alt="Logo de ImportaFácil" className="logo-image" />
+                <img src={logoImage} alt="Logo de PitaExpress" className="logo-image" />
                 <span className="logo-text">PitaExpress</span>
             </div>
             <nav className="nav-buttons">
