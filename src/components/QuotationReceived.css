@@ -43,14 +43,14 @@
 }
 
 .response-time-notice {
-    background-color: #76a0bc; /* Light blue background */
-    border: 1px solid #cceeff;
+    background-color: #ffebee; /* Light pink background */
+    border: 1px solid #ffcdd2; /* Red border */
     border-radius: 8px;
     padding: 15px 20px;
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #fffafa;
+    color: #d32f2f; /* Darker red text */
     font-size: 0.95rem;
     font-weight: 500;
     width: 100%;

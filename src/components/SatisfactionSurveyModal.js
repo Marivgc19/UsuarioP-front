@@ -1,28 +1,39 @@
 import React, { useState } from 'react';
+import { Player } from '@lottiefiles/react-lottie-player';
 import './SatisfactionSurveyModal.css';
 
+// Importa el archivo .json con la ruta corregida.
+// Se asume que el archivo está en la carpeta 'src/assets' y el componente en 'src/components'.
+import editDocumentIcon from '../assets/lottie/wired-flat-245-edit-document-hover-pinch.json';
+
 function SatisfactionSurveyModal({ onClose }) {
-    const [rating, setRating] = useState(0); // For star rating
-    const [recommendation, setRecommendation] = useState(''); // 'yes', 'maybe', 'no'
+    const [rating, setRating] = useState(0);
+    const [recommendation, setRecommendation] = useState('');
     const [comments, setComments] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Here you would send the survey data to your backend
         console.log({
             rating,
             recommendation,
             comments
         });
         alert('¡Gracias por tu opinión! Encuesta enviada exitosamente.');
-        onClose(); // Close the modal after submission
+        onClose();
     };
 
     return (
         <div className="survey-modal-overlay">
             <div className="survey-modal-content">
                 <div className="survey-modal-header">
-                    <span className="survey-header-icon">📝</span> {/* Pencil icon from image */}
+                    {/* Se reemplaza el icono de emoji por el componente Player */}
+                    <Player
+                        autoplay
+                        loop
+                        src={editDocumentIcon}
+                        style={{ height: '50px', width: '50px' }}
+                    >
+                    </Player>
                     <h2 className="survey-title">Encuesta de Satisfacción</h2>
                     <button className="survey-close-button" onClick={onClose}>&times;</button>
                 </div>

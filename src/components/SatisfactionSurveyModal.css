@@ -41,7 +41,7 @@
 .survey-header-icon {
     width: 55px;
     height: 55px;
-    background: linear-gradient(45deg, #FF7043, #FFB74D);
+    background: linear-gradient(45deg, #202841, #23335b);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -213,7 +213,7 @@
 
 /* Submit Button */
 .submit-survey-button {
-    background: linear-gradient(90deg, #2f80ed 0%, #64b5f6 100%);
+    background: linear-gradient(90deg, #202841 0%, #23335b 100%);
     color: white;
     padding: 15px 30px;
     font-size: 1.1rem;
@@ -362,4 +362,14 @@
 .survey-modal-content {
     scrollbar-width: thin; /* 'auto' | 'thin' | 'none' */
     scrollbar-color: rgba(190, 190, 190, 0.6) transparent; /* thumb color track color */
+}
+
+.recommendation-options .radio-option .option-content {
+    color: #333;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.recommendation-options .radio-option.selected .option-content {
+    color: #fff !important;
 }

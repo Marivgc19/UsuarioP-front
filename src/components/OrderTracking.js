@@ -1,28 +1,35 @@
 import React from 'react';
 import './OrderTracking.css';
+import { Player } from '@lottiefiles/react-lottie-player';
 
-function OrderTracking({ orderId, onOpenSurvey }) { // Added onOpenSurvey prop
+// Importa tus archivos Lottie.
+import checkmarkLottie from '../assets/lottie/wired-flat-37-approve-checked-simple-hover-wobble.json';
+import purchaseLottie from '../assets/lottie/IWTFP3ADxQ.json';
+import airplaneLottie from '../assets/lottie/Airplane.json';
+import editDocumentIcon from '../assets/lottie/wired-flat-245-edit-document-hover-pinch.json';
+
+function OrderTracking({ orderId, onOpenSurvey }) {
     // Dummy data for tracking steps, replace with actual data from backend
     const trackingSteps = [
         {
             id: 'payment_confirmed',
             label: 'Pago Confirmado',
             date: '15/01/2024',
-            icon: '✔️',
+            icon: checkmarkLottie,
             color: 'green'
         },
         {
             id: 'product_purchased',
             label: 'Producto Comprado',
             date: '16/01/2024',
-            icon: '📦',
+            icon: purchaseLottie,
             color: 'blue'
         },
         {
             id: 'in_transit',
             label: 'En Tránsito',
             date: 'Estimado: 25/01/2024',
-            icon: '✈️',
+            icon: airplaneLottie,
             color: 'orange'
         },
         // Add more steps here
@@ -34,7 +41,13 @@ function OrderTracking({ orderId, onOpenSurvey }) { // Added onOpenSurvey prop
     return (
         <div className="order-tracking-card">
             <div className="tracking-header-icon">
-                <span className="tracking-icon">📦</span>
+                <Player
+                    autoplay={true}
+                    loop={true}
+                    src={purchaseLottie}
+                    className="lottie-icon main-tracking-lottie"
+                    style={{ height: '70px', width: '70px' }}
+                />
             </div>
             <h2 className="tracking-title">Seguimiento del Pedido</h2>
             <p className="tracking-subtitle">Monitorea el progreso de tu pedido en tiempo real</p>
@@ -43,7 +56,17 @@ function OrderTracking({ orderId, onOpenSurvey }) { // Added onOpenSurvey prop
                 {trackingSteps.map(step => (
                     <div key={step.id} className={`tracking-step-box ${step.color}`}>
                         <div className="step-icon-circle">
-                            <span className="step-icon">{step.icon}</span>
+                            <Player
+                                autoplay={true}
+                                loop={true}
+                                src={step.icon}
+                                className="lottie-icon"
+                                style={
+                                    (step.id === 'product_purchased' || step.id === 'in_transit')
+                                        ? { height: '60px', width: '60px' }
+                                        : { height: '40px', width: '40px' }
+                                }
+                            />
                         </div>
                         <p className="step-label">{step.label}</p>
                         <p className="step-date">{step.date}</p>
@@ -61,8 +84,16 @@ function OrderTracking({ orderId, onOpenSurvey }) { // Added onOpenSurvey prop
             </div>
 
             <div className="tracking-actions">
-                <button className="action-button survey" onClick={onOpenSurvey}> {/* Added onClick handler */}
-                    <span className="button-icon">📝</span> Encuesta
+                <button className="action-button survey" onClick={onOpenSurvey}>
+                    {/* Se reemplaza el icono de emoji por el componente Player */}
+                    <Player
+                        autoplay
+                        loop
+                        src={editDocumentIcon}
+                        style={{ height: '30px', width: '30px' }}
+                    >
+                    </Player> 
+                    Encuesta
                 </button>
             </div>
         </div>

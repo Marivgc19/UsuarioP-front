@@ -18,9 +18,7 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
     const [referenceNumber, setReferenceNumber] = useState('');
     const [paymentProof, setPaymentProof] = useState(null);
 
-    // Estados para controlar el hover de las animaciones Lottie
-    const [isMainPaymentIconHovered, setIsMainPaymentIconHovered] = useState(false); // Nuevo estado para el icono principal
-    const [isClockHovered, setIsClockHovered] = useState(false);
+    // Estados para controlar el hover de las animaciones Lottie restantes
     const [isBolivaresCategoryHovered, setIsBolivaresCategoryHovered] = useState(false);
     const [isDolaresCategoryHovered, setIsDolaresCategoryHovered] = useState(false);
     const [isUploadIconHovered, setIsUploadIconHovered] = useState(false);
@@ -33,7 +31,6 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
     const paymentMethods = {
         bolivares: {
             title: 'Pago en Bolívares (Bs)',
-            // icon: '💰', // No se necesita más aquí porque usaremos Lottie
             options: {
                 pagoMovil: {
                     label: 'Pago Móvil (Validación automática)',
@@ -47,7 +44,6 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
         },
         dolares: {
             title: 'Pago en Dólares ($)',
-            // icon: '💵', // No se necesita más aquí
             options: {
                 binanceUSDT: {
                     label: 'Binance USDT (Validación manual)',
@@ -69,7 +65,6 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
         if (!selectedPaymentMethod) {
             return "Selecciona un método de pago para ver las instrucciones";
         }
-
         for (const typeKey in paymentMethods) {
             if (paymentMethods[typeKey].options[selectedPaymentMethod]) {
                 return paymentMethods[typeKey].options[selectedPaymentMethod].instructions;
@@ -111,18 +106,12 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
 
     return (
         <div className="make-payment-card">
-            <div
-                className="payment-header-icon"
-                onMouseEnter={() => setIsMainPaymentIconHovered(true)}
-                onMouseLeave={() => setIsMainPaymentIconHovered(false)}
-            >
-                {/* Icono principal de pago - usando Lottie de una moneda (puedes cambiarlo por una tarjeta de crédito si tienes una Lottie) */}
+            <div className="payment-header-icon">
                 <Player
-                    key={isMainPaymentIconHovered ? 'main-payment-active' : 'main-payment-inactive'}
-                    autoplay={isMainPaymentIconHovered}
-                    loop={false} // Animación de un solo 'pinch' o 'pop'
-                    src={generalCoinLottie} // Reemplaza con tu Lottie de tarjeta de crédito si tienes uno
-                    className="lottie-icon main-payment-lottie" // Añadida una clase específica para este lottie
+                    autoplay={true} // Se reproduce automáticamente
+                    loop={true} // Se repite de forma continua
+                    src={generalCoinLottie}
+                    className="lottie-icon main-payment-lottie"
                     style={{ height: '70px', width: '70px' }}
                 />
             </div>
@@ -131,17 +120,11 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
                 Completa el pago de tu orden #{orderId} por un total de <span className="payment-amount">{totalAmount}</span>
             </p>
 
-            <div
-                className="payment-notice"
-                onMouseEnter={() => setIsClockHovered(true)}
-                onMouseLeave={() => setIsClockHovered(false)}
-            >
-                {/* Icono de reloj - usando Lottie de alarma */}
+            <div className="payment-notice">
                 <span className="clock-icon-wrapper">
                     <Player
-                        key={isClockHovered ? 'clock-active' : 'clock-inactive'}
-                        autoplay={isClockHovered}
-                        loop={true} // El reloj puede tener una animación continua/repetitiva
+                        autoplay={true} // Se reproduce automáticamente
+                        loop={true} // Se repite de forma continua
                         src={alarmClockLottie}
                         className="lottie-icon"
                         style={{ height: '30px', width: '30px', marginRight: '5px' }}
@@ -160,13 +143,11 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
 
                     <h3>Métodos de Pago</h3>
                     <div className="payment-methods-group">
-                        {/* Pago en Bolívares */}
                         <div
                             className="payment-method-category bolivares-section"
                             onMouseEnter={() => setIsBolivaresCategoryHovered(true)}
                             onMouseLeave={() => setIsBolivaresCategoryHovered(false)}
                         >
-                            {/* Icono de categoría Bolívares - usando Lottie de moneda */}
                             <span className="category-header-icon">
                                 <Player
                                     key={isBolivaresCategoryHovered ? 'bolivares-category-active' : 'bolivares-category-inactive'}
@@ -189,7 +170,6 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
                                             onChange={() => setSelectedPaymentMethod(key)}
                                         />
                                         <div className="option-content">
-                                            {/* Icono para Pago Móvil (Emoji con animación CSS) */}
                                             {key === 'pagoMovil' && (
                                                 <span
                                                     className={`method-icon ${isPagoMovilEmojiHovered ? 'hover-animation' : ''}`}
@@ -199,11 +179,10 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
                                                     📱
                                                 </span>
                                             )}
-                                            {/* Icono para Transferencia Bancaria (Lottie de edificio de banco) */}
                                             {key === 'transferenciaBancaria' && (
                                                 <Player
                                                     key={'transfer-bank-lottie'}
-                                                    autoplay={selectedPaymentMethod === key || isBolivaresCategoryHovered} // Activa al seleccionar o al hacer hover en la categoría
+                                                    autoplay={selectedPaymentMethod === key || isBolivaresCategoryHovered}
                                                     loop={false}
                                                     src={bankBuildingLottie}
                                                     className="lottie-icon"
@@ -217,13 +196,11 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
                             </div>
                         </div>
 
-                        {/* Pago en Dólares */}
                         <div
                             className="payment-method-category dolares-section"
                             onMouseEnter={() => setIsDolaresCategoryHovered(true)}
                             onMouseLeave={() => setIsDolaresCategoryHovered(false)}
                         >
-                            {/* Icono de categoría Dólares - usando Lottie de moneda */}
                             <span className="category-header-icon">
                                 <Player
                                     key={isDolaresCategoryHovered ? 'dolares-category-active' : 'dolares-category-inactive'}
@@ -246,7 +223,6 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
                                             onChange={() => setSelectedPaymentMethod(key)}
                                         />
                                         <div className="option-content">
-                                            {/* Icono para Binance USDT (Lottie de logo Binance) */}
                                             {key === 'binanceUSDT' && (
                                                 <Player
                                                     key={'binance-usdt-lottie'}
@@ -257,7 +233,6 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
                                                     style={{ height: '24px', width: '24px' }}
                                                 />
                                             )}
-                                            {/* Icono para Zelle (Lottie de flecha de compartir) */}
                                             {key === 'zelle' && (
                                                 <Player
                                                     key={'zelle-lottie'}
@@ -268,7 +243,6 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
                                                     style={{ height: '24px', width: '24px' }}
                                                 />
                                             )}
-                                            {/* Icono para PayPal (Emoji con animación CSS) */}
                                             {key === 'payPal' && (
                                                 <span
                                                     className={`method-icon ${isPayPalEmojiHovered ? 'hover-animation' : ''}`}
@@ -315,12 +289,11 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
                             onMouseEnter={() => setIsUploadIconHovered(true)}
                             onMouseLeave={() => setIsUploadIconHovered(false)}
                         >
-                            {/* Icono de subir archivo - usando Lottie de folder/añadir */}
                             <span className="upload-icon-wrapper">
                                 <Player
                                     key={isUploadIconHovered ? 'upload-active' : 'upload-inactive'}
                                     autoplay={isUploadIconHovered}
-                                    loop={true} // Animación continua al añadir archivos
+                                    loop={true}
                                     src={folderAddingFilesLottie}
                                     className="lottie-icon"
                                     style={{ height: '40px', width: '40px' }}
@@ -348,12 +321,11 @@ function MakePayment({ orderId, totalAmount, onPaymentConfirmed }) {
                             onMouseLeave={() => setIsConfirmCheckHovered(false)}
                         >
                             Confirmar Pago
-                            {/* Icono de check - usando Lottie de aprobación */}
                             <span className="check-icon-wrapper">
                                 <Player
                                     key={isConfirmCheckHovered ? 'confirm-check-active' : 'confirm-check-inactive'}
                                     autoplay={isConfirmCheckHovered}
-                                    loop={false} // Animación de un solo check
+                                    loop={false}
                                     src={approveCheckLottie}
                                     className="lottie-icon"
                                     style={{ height: '24px', width: '24px', marginLeft: '10px' }}

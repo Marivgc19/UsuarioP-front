@@ -14,7 +14,7 @@
 .tracking-header-icon {
     width: 80px;
     height: 80px;
-    background: linear-gradient(45deg, #9370DB, #B19CD9); /* Purple gradient from image */
+    background: linear-gradient(45deg, #202841, #23335b); /* Purple gradient from image */
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -205,10 +205,10 @@
 
 .action-button.survey {
     /* Background matches image's 'Encuesta' button color. */
-    background: linear-gradient(45deg, #FF9800, #FFB74D); /* Orange */
+    background: linear-gradient(45deg, #202841, #23335b); 
 }
 .action-button.survey:hover {
-    background: linear-gradient(45deg, #FB8C00, #FFCC80);
+    background: linear-gradient(45deg, #202841 0%, #435b96 100%);
 }
 
 
