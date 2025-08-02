@@ -1,31 +1,24 @@
-import React, { useState } from 'react'; // Importa useState
+import React, { useState } from 'react';
 import './OrderConfirmed.css';
-import { Player } from '@lottiefiles/react-lottie-player'; // Importa el Player
+import { Player } from '@lottiefiles/react-lottie-player';
 
 // Importa tus archivos Lottie
 import confettiLottie from '../assets/lottie/wired-flat-1103-confetti-hover-pinch.json';
-import shareArrowLottie from '../assets/lottie/wired-flat-751-share-hover-slide.json'; // Usaremos este para la flecha
+import shareArrowLottie from '../assets/lottie/wired-flat-751-share-hover-slide.json';
 
 function OrderConfirmed({ orderId, productName, totalPrice, onProceedToPayment }) {
-    // Estados para controlar el hover de cada icono
-    const [isConfettiHovered, setIsConfettiHovered] = useState(false);
+    // Estado para controlar el hover de la flecha
     const [isArrowHovered, setIsArrowHovered] = useState(false);
 
     return (
         <div className="order-confirmed-card">
-            <div
-                className="celebration-icon-container"
-                onMouseEnter={() => setIsConfettiHovered(true)} // Activar hover
-                onMouseLeave={() => setIsConfettiHovered(false)} // Desactivar hover
-            >
-                {/* Reemplaza 🎉 con la animación Lottie de confeti */}
+            <div className="celebration-icon-container">
                 <Player
-                    key={isConfettiHovered ? 'confetti-active' : 'confetti-inactive'} // Cambia la key para reiniciar la animación
-                    autoplay={isConfettiHovered} // Solo reproduce en hover
-                    loop={true} // Se repite mientras esté en hover (pinch sugiere loop)
+                    autoplay={true} // Ahora la animación se reproduce automáticamente
+                    loop={true} // Se repite de forma continua
                     src={confettiLottie}
-                    className="lottie-icon" // Puedes añadir una clase CSS si lo necesitas
-                    style={{ height: '80px', width: '80px' }} // Ajusta el tamaño según necesites
+                    className="lottie-icon"
+                    style={{ height: '80px', width: '80px' }}
                 />
             </div>
             <h2 className="confirmation-title">¡Orden Aceptada!</h2>
@@ -67,19 +60,18 @@ function OrderConfirmed({ orderId, productName, totalPrice, onProceedToPayment }
             <button
                 className="proceed-to-payment-button"
                 onClick={onProceedToPayment}
-                onMouseEnter={() => setIsArrowHovered(true)} // Activar hover
-                onMouseLeave={() => setIsArrowHovered(false)} // Desactivar hover
+                onMouseEnter={() => setIsArrowHovered(true)}
+                onMouseLeave={() => setIsArrowHovered(false)}
             >
                 Proceder al Pago
                 <span className="arrow-icon">
-                    {/* Reemplaza ➡️ con la animación Lottie de la flecha */}
                     <Player
                         key={isArrowHovered ? 'arrow-active' : 'arrow-inactive'}
-                        autoplay={isArrowHovered} // Solo reproduce en hover
-                        loop={false} // Se reproduce una vez (slide sugiere no loop)
-                        src={shareArrowLottie} // Usando el Lottie de "share" para la flecha
-                        className="lottie-icon" // Clase para estilizar Lottie
-                        style={{ height: '24px', width: '24px', marginLeft: '10px' }} // Ajusta el tamaño y el margen
+                        autoplay={isArrowHovered}
+                        loop={false}
+                        src={shareArrowLottie}
+                        className="lottie-icon"
+                        style={{ height: '24px', width: '24px', marginLeft: '10px' }}
                     />
                 </span>
             </button>

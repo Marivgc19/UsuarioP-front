@@ -14,7 +14,6 @@
 
 }
 
-
 /* Contenedor del logo */
 .logo-container {
     display: flex;
@@ -84,14 +83,14 @@
 /* Estilos específicos para el botón de Chat Soporte */
 .chat-button {
     background-color: var(--primary-blue); /* Color de fondo azul */
-    color: white;
+    color: #202841 !important;
 }
 
 .chat-button .dot {
     display: inline-block;
     width: 8px;
     height: 8px;
-    background-color: #4CAF50; /* Verde para el "online" */
+    background-color: #53b03a; /* Verde para el "online" */
     border-radius: 50%;
     margin-right: 8px; /* Espacio entre el punto y el texto */
     animation: pulse 1.5s infinite ease-in-out; /* Animación de pulsación */
@@ -100,14 +99,9 @@
 /* Estilos específicos para el botón de Tracking */
 .tracking-button {
     background-color: #f0f0f0; /* Fondo gris claro */
-    color: var(--primary-blue); /* Texto azul */
+    color: #202841 !important; /* Texto azul */
     border: 1px solid #ddd; /* Borde sutil */
 }
-
-/* ***** AJUSTE CLAVE PARA LA ANIMACIÓN LOTTIE DEL CAMIÓN ***** */
-/* El componente <Player> de react-lottie-player crea un div.
-   Asegúrate de que el style inline del Player { height: '24px', width: '24px', marginRight: '8px' }
-   esté establecido como en el JSX anterior. */
 
 /* Puedes añadir estilos adicionales si el Player necesita un contenedor específico o ajustes: */
 .tracking-button .lottie-player-container { /* Si envuelves el Player en un div, por ejemplo */
@@ -117,8 +111,6 @@
     /* Otros estilos si es necesario, como margen */
     margin-right: 8px; /* Ejemplo de margen, si no lo pones inline */
 }
-
-
 /* Animación para el punto del chat */
 @keyframes pulse {
     0% {
@@ -191,7 +183,6 @@
         height: 30px;
     }
 }
-/* ... (código CSS anterior del Header.css) ... */
 
 /* Estilos base para los botones de navegación */
 .nav-button {
@@ -215,7 +206,7 @@
 
 /* Estilos específicos para el botón de Chat Soporte */
 .chat-button {
-    background-color: var(--primary-blue);
+    background-color: #202841;
     color: white;
 }
 
@@ -232,19 +223,9 @@
 /* Estilos específicos para el botón de Tracking */
 .tracking-button {
     background-color: #f0f0f0;
-    color: var(--primary-blue);
+    color: #202841;
     border: 1px solid #ddd;
 }
-
-/* AJUSTE CLAVE PARA LA ANIMACIÓN LOTTIE DEL CAMIÓN */
-/* Aquí no hay cambios en el CSS, el tamaño se controla desde el JSX inline style */
-/* Asegúrate que en Header.js el style={{ height: '28px', width: '28px', marginRight: '10px' }}
-   del <Player> sea adecuado para el nuevo tamaño del botón.
-   Por ejemplo, podríamos aumentarlo a 28px o 30px. */
-
-
-/* ... (resto del código CSS de Header.css) ... */
-
 
 /* Media Queries para Responsive Design */
 @media (max-width: 768px) {

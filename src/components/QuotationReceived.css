@@ -43,14 +43,14 @@
 }
 
 .response-time-notice {
-    background-color: #e0f2fe; /* Light blue background */
+    background-color: #76a0bc; /* Light blue background */
     border: 1px solid #cceeff;
     border-radius: 8px;
     padding: 15px 20px;
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #333;
+    color: #fffafa;
     font-size: 0.95rem;
     font-weight: 500;
     width: 100%;
@@ -171,9 +171,9 @@
 }
 
 .btn-modify {
-    background-color: var(--primary-blue); /* Orange/Red in image, now blue */
+    background-color: #202841; 
     color: white;
-    box-shadow: 0 4px 10px rgba(47, 128, 237, 0.3);
+    box-shadow: 0 4px 10px rgba(15, 50, 96, 0.3);
 }
 .btn-modify:hover {
     background-color: var(--button-hover-blue);
@@ -189,7 +189,7 @@
 }
 
 .btn-reject {
-    background-color: #dc3545; /* Red */
+    background-color: #ee3c23; /* Red */
     color: white;
     box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
 }

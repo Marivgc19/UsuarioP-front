@@ -14,7 +14,7 @@
 .chat-modal-content {
     background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%); /* Light blue gradient */
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgb(255, 251, 251);
     width: 90%;
     max-width: 400px;
     height: 60vh; /* Adjust height as needed */
@@ -25,7 +25,7 @@
 }
 
 .chat-header {
-    background: linear-gradient(90deg, #4CAF50 0%, #81C784 100%); /* Green gradient for chat header */
+    background: linear-gradient(90deg, #202841 0%, #23335b 100%); /* Green gradient for chat header */
     color: white;
     padding: 15px 20px;
     font-size: 1.1rem;
@@ -74,7 +74,7 @@
     border-radius: 15px;
     max-width: 80%;
     word-wrap: break-word;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgb(227, 227, 227);
 }
 
 .message-bubble.support {
@@ -123,13 +123,13 @@
 }
 
 .send-button {
-    background: linear-gradient(90deg, #4CAF50 0%, #81C784 100%); /* Green gradient for send button */
-    color: white;
+    background: linear-gradient(90deg, #202841 0%, #23335b 100%); 
     padding: 10px 20px;
     border-radius: 25px;
     margin-left: 10px;
     font-weight: 600;
     transition: opacity 0.3s ease, transform 0.3s ease;
+    color: white;
 }
 
 .send-button:hover {

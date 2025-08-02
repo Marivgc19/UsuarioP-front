@@ -5,7 +5,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 // Importa tus archivos Lottie. ASEGÚRATE DE QUE ESTAS RUTAS SON CORRECTAS PARA TU PROYECTO.
 // Por ejemplo, si tu MakePayment.js está en 'src/components' y los lotties en 'src/assets/lottie',
 // la ruta correcta sería '../../assets/lottie/nombre_del_archivo.json'
-import alarmClockLottie from '../assets/lottie/wired-flat-236-alarm-clock-hover-pinch.json';
+import alarmClockLottie from '../assets/lottie/wired-flat-236-alarm-clock-loop-cycle.json';
 import generalCoinLottie from '../assets/lottie/wired-flat-290-coin-hover-pinch.json'; // Usado para iconos de dinero/moneda
 import bankBuildingLottie from '../assets/lottie/wired-flat-403-museum-authority-hover-pinch.json'; // Para transferencia bancaria
 import binanceLogoLottie from '../assets/lottie/wired-flat-2585-logo-binance-hover-pinch.json'; // Para Binance USDT

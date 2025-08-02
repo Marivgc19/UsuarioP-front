@@ -2,7 +2,7 @@
 
 /* Define new custom colors for navy/light blue theme */
 :root {
-    --navy-blue: #1b64b8; /* A deep navy blue */
+    --navy-blue: #202841; /* A deep navy blue */
     --soft-blue: #88a7da; /* A soft light blue, similar to lightskyblue */
     --modal-background: #f8fcff; /* Very light blue background */
     --button-dark-blue-hover: #001f40;
