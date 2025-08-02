@@ -14,8 +14,8 @@
 }
 
 .tracking-header {
-    background-color: var(--primary-blue);
-    color: white;
+    background-color: #202841 !important;
+    color: #fff !important;
     padding: 15px 25px;
     font-size: 1.2rem;
     font-weight: 600;
@@ -24,6 +24,9 @@
     justify-content: space-between;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+    position: relative; /* Para posicionar el botón de cierre */
 }
 
 .tracking-icon-header {
@@ -33,9 +36,12 @@
 
 /* Close button style is shared with chat modal */
 .close-button {
+    position: absolute; /* Posición absoluta para sacarlo del flujo normal */
+    top: 5px; /* Ajusta la posición superior */
+    right: 5px; /* Ajusta la posición derecha */
     background: none;
     border: none;
-    color: white;
+    color: #888;
     font-size: 1.8rem;
     cursor: pointer;
     padding: 0 5px;

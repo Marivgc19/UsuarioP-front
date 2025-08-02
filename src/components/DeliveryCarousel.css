@@ -19,7 +19,7 @@
     min-width: 250px;
     flex-grow: 1;
     background-color: #f8fbff;
-    border: 2px solid #e0f0ff;
+    border: 2px solid #d1d1d1; /* color original del borde */
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -28,13 +28,13 @@
 }
 
 .delivery-card:hover {
-    border-color: var(--primary-blue, #2f80ed);
+    border-color: #202841 !important;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transform: translateY(-5px);
 }
 
 .delivery-card.selected {
-    border-color: var(--primary-blue, #2f80ed);
+    border-color: #202841 !important;
     background-color: var(--light-blue, #e6f7ff);
     box-shadow: 0 4px 15px rgba(47, 128, 237, 0.2);
 }

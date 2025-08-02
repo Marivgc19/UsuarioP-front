@@ -6,8 +6,10 @@ import cargoShipLottie from '../assets/lottie/wired-flat-1337-cargo-ship-hover-p
 import woodenBoxLottie from '../assets/lottie/wired-flat-1356-wooden-box-hover-pinch.json';
 
 const ShippingCarousel = ({ selectedValue, onSelect }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [hoveredOption, setHoveredOption] = useState(null);
-    const carouselRef = useRef(null);
+    const [isTransitioning, setIsTransitioning] = useState(false);
+    const [direction, setDirection] = useState('next');
 
     const options = [
         {
@@ -30,55 +32,109 @@ const ShippingCarousel = ({ selectedValue, onSelect }) => {
         },
     ];
 
-    const scrollCarousel = (direction) => {
-        if (carouselRef.current) {
-            const scrollAmount = 300; // Ajusta este valor según el ancho de las tarjetas
-            carouselRef.current.scrollBy({
-                left: direction === 'left' ? -scrollAmount : scrollAmount,
-                behavior: 'smooth'
-            });
-        }
+    const goToNext = () => {
+        if (isTransitioning) return;
+        setDirection('next');
+        setIsTransitioning(true);
+        setTimeout(() => {
+            setCurrentIndex((prevIndex) => 
+                prevIndex === options.length - 1 ? 0 : prevIndex + 1
+            );
+            setTimeout(() => setIsTransitioning(false), 100);
+        }, 300);
     };
+
+    const goToPrevious = () => {
+        if (isTransitioning) return;
+        setDirection('prev');
+        setIsTransitioning(true);
+        setTimeout(() => {
+            setCurrentIndex((prevIndex) => 
+                prevIndex === 0 ? options.length - 1 : prevIndex - 1
+            );
+            setTimeout(() => setIsTransitioning(false), 100);
+        }, 300);
+    };
+
+    const goToIndex = (index) => {
+        if (isTransitioning || index === currentIndex) return;
+        setDirection(index > currentIndex ? 'next' : 'prev');
+        setIsTransitioning(true);
+        setTimeout(() => {
+            setCurrentIndex(index);
+            setTimeout(() => setIsTransitioning(false), 100);
+        }, 300);
+    };
+
+    const currentOption = options[currentIndex];
 
     return (
         <div className="shipping-carousel-container">
             <h3 className="carousel-title">Tipo de Envío</h3>
-            <div className="carousel-wrapper">
+            
+            <div className="carousel-content-wrapper">
                 <button
                     type="button"
-                    className="carousel-arrow left-arrow"
-                    onClick={() => scrollCarousel('left')}
+                    className="carousel-nav-button left"
+                    onClick={goToPrevious}
+                    aria-label="Opción anterior"
                 >
-                    &lt;
+                    &#8249;
                 </button>
-                <div className="shipping-carousel" ref={carouselRef}>
-                    {options.map(option => (
+                
+                <div className="carousel-content">
+                    <div className="card-container">
                         <div
-                            key={option.value}
-                            className={`shipping-card ${selectedValue === option.value ? 'selected' : ''}`}
-                            onClick={() => onSelect(option.value)}
-                            onMouseEnter={() => setHoveredOption(option.value)}
+                            className={`shipping-card ${selectedValue === currentOption.value ? 'selected' : ''} ${isTransitioning ? `transitioning-${direction}` : ''}`}
+                            onClick={() => onSelect(currentOption.value)}
+                            onMouseEnter={() => setHoveredOption(currentOption.value)}
                             onMouseLeave={() => setHoveredOption(null)}
                         >
-                            <Player
-                                key={hoveredOption === option.value || selectedValue === option.value ? 'active' : 'inactive'}
-                                autoplay={hoveredOption === option.value || selectedValue === option.value}
-                                loop={true}
-                                src={option.lottie}
-                                className="shipping-lottie-icon"
-                            />
-                            <h4 className="shipping-card-title">{option.label}</h4>
-                            <p className="shipping-card-description">{option.description}</p>
+                            <div className="card-inner">
+                                <div className="card-content">
+                                    <div className="lottie-container">
+                                        <Player
+                                            key={`${currentOption.value}-${hoveredOption === currentOption.value || selectedValue === currentOption.value ? 'active' : 'inactive'}`}
+                                            autoplay={hoveredOption === currentOption.value || selectedValue === currentOption.value}
+                                            loop={true}
+                                            src={currentOption.lottie}
+                                            className="shipping-lottie-icon"
+                                        />
+                                    </div>
+                                    <h4 className="shipping-card-title">{currentOption.label}</h4>
+                                    <p className="shipping-card-description">{currentOption.description}</p>
+                                </div>
+                            </div>
                         </div>
-                    ))}
+                    </div>
                 </div>
+                
                 <button
                     type="button"
-                    className="carousel-arrow right-arrow"
-                    onClick={() => scrollCarousel('right')}
+                    className="carousel-nav-button right"
+                    onClick={goToNext}
+                    aria-label="Siguiente opción"
                 >
-                    &gt;
+                    &#8250;
                 </button>
+            </div>
+
+            {/* Contador y indicadores */}
+            <div className="carousel-footer">
+                <span className="carousel-counter">
+                    {currentIndex + 1} / {options.length}
+                </span>
+                <div className="carousel-indicators">
+                    {options.map((_, index) => (
+                        <button
+                            key={index}
+                            type="button"
+                            className={`indicator ${index === currentIndex ? 'active' : ''}`}
+                            onClick={() => goToIndex(index)}
+                            aria-label={`Ir a opción ${index + 1}`}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );
