@@ -44,7 +44,7 @@
 
 .payment-amount {
     font-weight: 700;
-    color: var(--primary-blue);
+    color: #202841;
 }
 
 .payment-notice {
@@ -111,13 +111,12 @@
 
 h3 {
     font-size: 1.3rem;
-    color: var(--primary-blue);
+    color: #202841;
     margin-bottom: 15px;
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
 }
 
-/* --- Payment Methods Section --- */
 .payment-methods-group {
     display: flex;
     flex-direction: column;
@@ -150,7 +149,7 @@ h3 {
 .category-header-title {
     font-size: 1.2rem;
     font-weight: 600;
-    color: var(--primary-blue);
+    color: #202841;
 }
 
 .radio-options-container {
@@ -252,7 +251,6 @@ h3 {
     line-height: 1.6;
 }
 
-/* --- Payment Proof Section (now light blue) --- */
 .payment-proof-section {
     /* Specific styling for the payment proof section to change from pink to light blue */
     background-color: #e0f7fa; /* Light cyan/blue - replaces pink */

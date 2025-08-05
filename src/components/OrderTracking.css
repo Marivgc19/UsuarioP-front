@@ -30,7 +30,7 @@
 
 .tracking-title {
     font-size: 1.8rem;
-    color: var(--primary-blue);
+    color: #202841;
     text-align: center;
     margin-bottom: 5px;
 }
@@ -107,7 +107,7 @@
 .step-label {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--primary-blue);
+    color: #202841;
     margin-bottom: 5px;
 }
 
@@ -116,7 +116,6 @@
     color: #666;
 }
 
-/* --- Current Status Section --- */
 .current-status-section {
     background-color: #fbfdff;
     border-radius: 12px;
@@ -128,7 +127,7 @@
 
 .current-status-section h3 {
     font-size: 1.3rem;
-    color: var(--primary-blue);
+    color: #202841;
     margin-bottom: 20px;
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
@@ -167,7 +166,6 @@
     font-weight: 500;
 }
 
-/* --- Tracking Actions (Buttons) --- */
 .tracking-actions {
     display: flex;
     flex-wrap: wrap; /* Allow wrapping on smaller screens */

@@ -54,7 +54,7 @@
 
 .survey-title {
     font-size: 1.8rem;
-    color: var(--primary-blue);
+    color: #202841;
     flex-grow: 1;
     font-weight: 700;
 }
@@ -82,7 +82,7 @@
 .survey-form label {
     display: block;
     font-size: 1.1rem;
-    color: var(--primary-blue);
+    color: #202841;
     margin-bottom: 15px;
     font-weight: 600;
 }
