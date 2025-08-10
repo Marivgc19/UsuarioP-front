@@ -1,6 +1,3 @@
-/* Inherits .modal-overlay from ChatSupportModal.css */
-
-/* Define new custom colors for navy/light blue theme */
 :root {
     --navy-blue: #202841; /* A deep navy blue */
     --soft-blue: #88a7da; /* A soft light blue, similar to lightskyblue */
@@ -109,12 +106,12 @@
 
 .modal-buttons {
     display: flex;
-    justify-content: flex-end; /* Align to the right */
+    justify-content: center; /* Se ha cambiado de 'flex-end' a 'center' */
     gap: 15px;
     margin-top: 20px;
 }
 
-.btn-send-modification, .btn-cancel-modification {
+.btn-send-modification {
     padding: 12px 25px;
     border-radius: 8px;
     font-size: 1rem;

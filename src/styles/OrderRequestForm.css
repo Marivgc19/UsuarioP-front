@@ -69,7 +69,7 @@
     background-color: var(--hover-dark-bg);
     border-color: var(--hover-dark-bg);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    color: rgb(0, 0, 0); /* Color de texto blanco en hover */
+    color: rgb(255, 255, 255); /* Color de texto blanco en hover */
 }
 
 .radio-option.selected .option-title,
@@ -163,21 +163,21 @@
 }
 
 .submit-button {
-    background-color: var(--primary-dark);
+    background-color: #202841; 
     color: white;
+    box-shadow: 0 4px 10px rgba(15, 50, 96, 0.3);
     padding: 15px 30px;
     font-size: 1.1rem;
     font-weight: 700;
     border-radius: 10px;
     align-self: center;
     margin-top: 20px;
-    box-shadow: 0 4px 10px rgba(32, 40, 65, 0.3);
     border: none;
 }
 
 .submit-button:hover {
-    background-color: var(--primary-red);
-    box-shadow: 0 6px 15px rgba(238, 60, 35, 0.4);
+    background-color: var(--button-hover-blue);
+    box-shadow: 0 4px 10px rgba(15, 50, 96, 0.3);
 }
 
 .image-upload-area {
@@ -200,8 +200,9 @@
 }
 
 .select-image-button {
-    background-color: var(--primary-dark);
+    background-color: #202841; 
     color: white;
+    box-shadow: 0 4px 10px rgba(15, 50, 96, 0.3);
     padding: 12px 25px;
     border-radius: 8px;
     font-size: 1rem;
@@ -212,8 +213,8 @@
 }
 
 .select-image-button:hover {
-    background-color: var(--primary-red);
-    box-shadow: 0 4px 10px rgba(238, 60, 35, 0.3);
+    background-color: var(--button-hover-blue);
+    box-shadow: 0 4px 10px rgba(15, 50, 96, 0.3);
 }
 
 .file-info {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ChatSupportModal.css';
+import '../../src/styles/ChatSupportModal.css';
 
 function ChatSupportModal({ onClose }) {
     const [message, setMessage] = useState('');
@@ -21,7 +21,7 @@ function ChatSupportModal({ onClose }) {
         <div className="modal-overlay">
             <div className="chat-modal-content">
                 <div className="chat-header">
-                    <span className="chat-dot"></span> Chat de Soporte
+                    <span className="chat-dot"></span> 
                     <button className="close-button" onClick={onClose}>&times;</button>
                 </div>
                 <div className="chat-messages">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
-import './SatisfactionSurveyModal.css';
+import '../../src/styles/SatisfactionSurveyModal.css';
 
 // Importa el archivo .json con la ruta corregida.
 // Se asume que el archivo está en la carpeta 'src/assets' y el componente en 'src/components'.
@@ -111,7 +111,7 @@ function SatisfactionSurveyModal({ onClose }) {
                     </div>
 
                     <button type="submit" className="submit-survey-button">
-                        Enviar Encuesta ✨
+                        Enviar Encuesta
                     </button>
                 </form>
             </div>

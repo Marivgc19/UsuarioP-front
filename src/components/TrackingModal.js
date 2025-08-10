@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './TrackingModal.css';
+import '../../src/styles/TrackingModal.css';
 // Eliminamos la importación del Player de Lottie
 // import { Player } from '@lottiefiles/react-lottie-player';
 

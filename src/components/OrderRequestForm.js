@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './OrderRequestForm.css';
+import '../../src/styles/OrderRequestForm.css';
 import { Player } from '@lottiefiles/react-lottie-player';
 import ShippingCarousel from './ShippingCarousel';
 import DeliveryCarousel from './DeliveryCarousel';
@@ -42,11 +42,13 @@ function OrderRequestForm({ onSubmitForm }) {
             return;
         }
 
+        // 2. Validar la URL si se seleccionó la opción de Link
         if (requestType === 'link' && !productUrl) {
             alert('Por favor, ingresa la URL del producto.');
             return;
         }
 
+        // 3. Validar imagen y descripción si se seleccionó la opción de Foto
         if (requestType === 'photo') {
             if (!productImage) {
                 alert('Por favor, sube una imagen del producto.');
@@ -57,7 +59,8 @@ function OrderRequestForm({ onSubmitForm }) {
                 return;
             }
         }
-
+        
+        // 4. Validar la cantidad
         if (quantity < 1) {
             alert('La cantidad debe ser al menos 1.');
             return;
@@ -98,6 +101,7 @@ function OrderRequestForm({ onSubmitForm }) {
             return;
         }
 
+        // 6. Validar la opción de entrega en Venezuela
         if (!deliveryVenezuela) {
             alert('Por favor, selecciona una opción de entrega en Venezuela.');
             return;

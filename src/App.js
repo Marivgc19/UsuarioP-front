@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import './App.css';
+import './styles/App.css';
 import Header from './components/Header';
 import OrderRequestForm from './components/OrderRequestForm';
-import Stepper from './components/Stepper';
 import ChatSupportModal from './components/ChatSupportModal';
 import TrackingModal from './components/TrackingModal';
 import QuotationReceived from './components/QuotationReceived';
@@ -89,10 +88,7 @@ function App() {
                 onOpenTracking={handleOpenTracking}
             />
             <div className="main-content">
-                <Stepper currentStep={currentStep} />
-                <div className="current-step-label-main">
-                    Paso {currentStep}: {getStepContentTitle(currentStep)}
-                </div>
+                
 
                 {currentStep === 1 && (
                     <OrderRequestForm onSubmitForm={handleFormSubmit} />

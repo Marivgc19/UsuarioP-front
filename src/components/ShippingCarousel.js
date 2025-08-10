@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import './ShippingCarousel.css';
+import '../../src/styles/ShippingCarousel.css';
 import { Player } from '@lottiefiles/react-lottie-player';
 import airPlaneLottie from '../assets/lottie/FTQoLAnxbj.json';
 import cargoShipLottie from '../assets/lottie/wired-flat-1337-cargo-ship-hover-pinch.json';

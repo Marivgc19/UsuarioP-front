@@ -1,5 +1,5 @@
 import React from 'react';
-import './PaymentSuccessNotification.css';
+import '../../src/styles/PaymentSuccessNotification.css';
 
 function PaymentSuccessNotification() {
     return (
