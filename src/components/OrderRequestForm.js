@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './OrderRequestForm.css';
 import { Player } from '@lottiefiles/react-lottie-player';
-import ShippingCarousel from './ShippingCarousel'; // Nuevo componente
-import DeliveryCarousel from './DeliveryCarousel'; // Nuevo componente
+import ShippingCarousel from './ShippingCarousel';
+import DeliveryCarousel from './DeliveryCarousel';
 
-// Importa tus archivos Lottie
 import airPlaneLottie from '../assets/lottie/FTQoLAnxbj.json';
 import cargoShipLottie from '../assets/lottie/wired-flat-1337-cargo-ship-hover-pinch.json';
 import woodenBoxLottie from '../assets/lottie/wired-flat-1356-wooden-box-hover-pinch.json';
@@ -19,6 +18,9 @@ function OrderRequestForm({ onSubmitForm }) {
     const [productDescription, setProductDescription] = useState('');
     const [quantity, setQuantity] = useState(1);
     const [technicalSpecs, setTechnicalSpecs] = useState('');
+
+    const [cartItems, setCartItems] = useState([]); // Lista de productos en el carrito
+
     const [deliveryType, setDeliveryType] = useState('');
     const [deliveryVenezuela, setDeliveryVenezuela] = useState('');
 
@@ -33,9 +35,8 @@ function OrderRequestForm({ onSubmitForm }) {
         }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
+    const handleAddToCart = () => {
+        // Validaciones
         if (!requestType) {
             alert('Por favor, selecciona cómo deseas solicitar tu producto (Link o Foto + Descripción).');
             return;
@@ -56,9 +57,39 @@ function OrderRequestForm({ onSubmitForm }) {
                 return;
             }
         }
-        
+
         if (quantity < 1) {
             alert('La cantidad debe ser al menos 1.');
+            return;
+        }
+
+        // Crea el objeto del producto
+        const newProduct = {
+            requestType,
+            productUrl: requestType === 'link' ? productUrl : null,
+            productImage: requestType === 'photo' ? productImage : null,
+            productDescription: requestType === 'photo' ? productDescription : null,
+            quantity,
+            technicalSpecs
+        };
+
+        // Agrega el producto al carrito
+        setCartItems([...cartItems, newProduct]);
+
+        // Limpia el formulario para el siguiente producto
+        setRequestType('link');
+        setProductUrl('');
+        setProductImage(null);
+        setProductDescription('');
+        setQuantity(1);
+        setTechnicalSpecs('');
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (cartItems.length === 0) {
+            alert('Por favor, agrega al menos un producto a tu caja.');
             return;
         }
 
@@ -72,18 +103,17 @@ function OrderRequestForm({ onSubmitForm }) {
             return;
         }
 
-        console.log({
-            requestType,
-            productUrl: requestType === 'link' ? productUrl : null,
-            productImage: requestType === 'photo' ? productImage : null,
-            productDescription: requestType === 'photo' ? productDescription : null,
-            quantity,
-            technicalSpecs,
-            deliveryType,
-            deliveryVenezuela
-        });
+        console.log('Carrito:', cartItems);
+        console.log('Tipo de envío:', deliveryType);
+        console.log('Entrega en Venezuela:', deliveryVenezuela);
         alert('Solicitud enviada (ver consola para datos). Pasando al siguiente paso...');
         onSubmitForm();
+    };
+
+    const handleRemoveFromCart = (index) => {
+        const newCartItems = [...cartItems];
+        newCartItems.splice(index, 1);
+        setCartItems(newCartItems);
     };
 
     const isActiveAnimation = (optionName) => {
@@ -241,7 +271,32 @@ function OrderRequestForm({ onSubmitForm }) {
                             required
                         ></textarea>
                     </div>
+                </div>
 
+                <button type="button" className="add-to-cart-button" onClick={handleAddToCart}>
+                    Agregar a la Caja
+                </button>
+
+                {/* Lista del carrito */}
+                {cartItems.length > 0 && (
+                    <div className="cart-section">
+                        <h3>Tu Caja</h3>
+                        <ul>
+                            {cartItems.map((item, index) => (
+                                <li key={index} className="cart-item">
+                                    Producto {index + 1} - Cantidad: {item.quantity}
+                                    <button type="button" onClick={() => handleRemoveFromCart(index)}>
+                                        Eliminar
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+
+                {/* Opciones de envío y entrega en Venezuela */}
+                <div className="shipping-options">
+                    <h3>Opciones de Envío</h3>
                     <ShippingCarousel
                         selectedValue={deliveryType}
                         onSelect={setDeliveryType}
@@ -251,11 +306,10 @@ function OrderRequestForm({ onSubmitForm }) {
                         selectedValue={deliveryVenezuela}
                         onSelect={setDeliveryVenezuela}
                     />
+                    <button type="submit" className="submit-button">
+                        Enviar Solicitud ✨
+                    </button>
                 </div>
-
-                <button type="submit" className="submit-button">
-                    Enviar Solicitud ✨
-                </button>
             </form>
         </div>
     );
