@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../src/styles/OrderRequestForm.css';
 import { Player } from '@lottiefiles/react-lottie-player';
-import ShippingCarousel from './ShippingCarousel';
+
 import DeliveryCarousel from './DeliveryCarousel';
 
 import airPlaneLottie from '../assets/lottie/FTQoLAnxbj.json';
@@ -25,6 +25,7 @@ function OrderRequestForm({ onSubmitForm }) {
     const [deliveryVenezuela, setDeliveryVenezuela] = useState('');
 
     const [hoveredDeliveryOption, setHoveredDeliveryOption] = useState(null);
+    const [hoveredShippingOption, setHoveredShippingOption] = useState(null);
     const [isFolderHovered, setIsFolderHovered] = useState(false);
     const [isCameraHovered, setIsCameraHovered] = useState(false);
     const [isLinkHovered, setIsLinkHovered] = useState(false);
@@ -278,7 +279,14 @@ function OrderRequestForm({ onSubmitForm }) {
                 </div>
 
                 <button type="button" className="add-to-cart-button" onClick={handleAddToCart}>
-                    Agregar a la Caja
+                    <span className="add-to-cart-text">Agregar a la Caja</span>
+                    <Player
+                        autoplay={true}
+                        loop={true}
+                        src={woodenBoxLottie}
+                        className="add-to-cart-lottie"
+                        style={{ height: '24px', width: '24px' }}
+                    />
                 </button>
 
                 {/* Lista del carrito */}
@@ -300,11 +308,98 @@ function OrderRequestForm({ onSubmitForm }) {
 
                 {/* Opciones de envío y entrega en Venezuela */}
                 <div className="shipping-options">
-                    <h3>Opciones de Envío</h3>
-                    <ShippingCarousel
-                        selectedValue={deliveryType}
-                        onSelect={setDeliveryType}
-                    />
+                    <h3>Tipo de Envío</h3>
+                    <div className="shipping-row-options">
+                        <label
+                            className={`shipping-option ${deliveryType === 'doorToWarehouse' ? 'selected' : ''}`}
+                            onMouseEnter={() => setHoveredShippingOption('doorToWarehouse')}
+                            onMouseLeave={() => setHoveredShippingOption(null)}
+                        >
+                            <input
+                                type="radio"
+                                name="deliveryType"
+                                value="doorToWarehouse"
+                                checked={deliveryType === 'doorToWarehouse'}
+                                onChange={() => setDeliveryType('doorToWarehouse')}
+                            />
+                            <div className="shipping-option-content">
+                                <div className="shipping-lottie-container">
+                                    <Player
+                                        key={hoveredShippingOption === 'doorToWarehouse' || deliveryType === 'doorToWarehouse' ? 'box-active' : 'box-inactive'}
+                                        autoplay={hoveredShippingOption === 'doorToWarehouse' || deliveryType === 'doorToWarehouse'}
+                                        loop={false}
+                                        src={woodenBoxLottie}
+                                        className="shipping-lottie-icon"
+                                        style={{ height: '40px', width: '40px' }}
+                                    />
+                                </div>
+                                <div className="shipping-text-content">
+                                    <span className="shipping-option-title">Puerta a Puerta</span>
+                                    <span className="shipping-option-description">Recogemos en tu dirección</span>
+                                </div>
+                            </div>
+                        </label>
+                        
+                        <label
+                            className={`shipping-option ${deliveryType === 'air' ? 'selected' : ''}`}
+                            onMouseEnter={() => setHoveredShippingOption('air')}
+                            onMouseLeave={() => setHoveredShippingOption(null)}
+                        >
+                            <input
+                                type="radio"
+                                name="deliveryType"
+                                value="air"
+                                checked={deliveryType === 'air'}
+                                onChange={() => setDeliveryType('air')}
+                            />
+                            <div className="shipping-option-content">
+                                <div className="shipping-lottie-container">
+                                    <Player
+                                        key={hoveredShippingOption === 'air' || deliveryType === 'air' ? 'air-active' : 'air-inactive'}
+                                        autoplay={hoveredShippingOption === 'air' || deliveryType === 'air'}
+                                        loop={false}
+                                        src={airPlaneLottie}
+                                        className="shipping-lottie-icon"
+                                        style={{ height: '40px', width: '40px' }}
+                                    />
+                                </div>
+                                <div className="shipping-text-content">
+                                    <span className="shipping-option-title">Envío Aéreo</span>
+                                    <span className="shipping-option-description">Envío rápido por vía aérea</span>
+                                </div>
+                            </div>
+                        </label>
+                        
+                        <label
+                            className={`shipping-option ${deliveryType === 'maritime' ? 'selected' : ''}`}
+                            onMouseEnter={() => setHoveredShippingOption('maritime')}
+                            onMouseLeave={() => setHoveredShippingOption(null)}
+                        >
+                            <input
+                                type="radio"
+                                name="deliveryType"
+                                value="maritime"
+                                checked={deliveryType === 'maritime'}
+                                onChange={() => setDeliveryType('maritime')}
+                            />
+                            <div className="shipping-option-content">
+                                <div className="shipping-lottie-container">
+                                    <Player
+                                        key={hoveredShippingOption === 'maritime' || deliveryType === 'maritime' ? 'maritime-active' : 'maritime-inactive'}
+                                        autoplay={hoveredShippingOption === 'maritime' || deliveryType === 'maritime'}
+                                        loop={false}
+                                        src={cargoShipLottie}
+                                        className="shipping-lottie-icon"
+                                        style={{ height: '40px', width: '40px' }}
+                                    />
+                                </div>
+                                <div className="shipping-text-content">
+                                    <span className="shipping-option-title">Envío Marítimo</span>
+                                    <span className="shipping-option-description">Envío económico por vía marítima</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
 
                     <DeliveryCarousel
                         selectedValue={deliveryVenezuela}
