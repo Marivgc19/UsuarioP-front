@@ -1,5 +1,5 @@
 import React from 'react';
-import './DeliveryCarousel.css';
+import '../../src/styles/DeliveryCarousel.css';
 import { Player } from '@lottiefiles/react-lottie-player';
 import courierLottie from '../assets/lottie/wired-flat-18-delivery-truck.json';
 import pickupLottie from '../assets/lottie/wired-flat-81-bank-office.json';

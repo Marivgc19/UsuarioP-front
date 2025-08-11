@@ -1,5 +1,5 @@
 import React from 'react';
-import './OrderTracking.css';
+import '../../src/styles/OrderTracking.css';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 // Importa tus archivos Lottie.

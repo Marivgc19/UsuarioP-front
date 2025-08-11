@@ -1,3 +1,7 @@
+:root {
+  --primary-blue: #2f80ed;
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -25,14 +29,14 @@
 }
 
 .chat-header {
-    background: linear-gradient(90deg, #202841 0%, #23335b 100%); /* Green gradient for chat header */
+    background: linear-gradient(90deg, #202841 0%, #23335b 100%);
     color: white;
     padding: 15px 20px;
     font-size: 1.1rem;
     font-weight: 600;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* Esta propiedad separa los elementos hijos */
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ModificationRequestModal.css';
+import '../../src/styles/ModificationRequestModal.css';
 import { Player } from '@lottiefiles/react-lottie-player'; // ¡Importa el Player!
 
 // Importa el archivo Lottie para el icono de modificación
@@ -9,9 +9,6 @@ function ModificationRequestModal({ onClose }) {
     const [modificationType, setModificationType] = useState('');
     const [modificationDetails, setModificationDetails] = useState('');
     const attemptsLeft = 2; // Hardcoded for now based on image "2 de 3"
-
-    // Nuevo estado para controlar el hover del icono de modificación
-    const [isEditIconHovered, setIsEditIconHovered] = useState(false);
 
     const handleSubmitModification = (e) => {
         e.preventDefault();
@@ -37,19 +34,14 @@ function ModificationRequestModal({ onClose }) {
     return (
         <div className="modal-overlay">
             <div className="modification-modal-content">
-                <div
-                    className="modification-header"
-                    onMouseEnter={() => setIsEditIconHovered(true)} // Activar hover
-                    onMouseLeave={() => setIsEditIconHovered(false)} // Desactivar hover
-                >
-                    {/* Reemplaza ✍️ con la animación Lottie */}
+                <div className="modification-header">
+                    {/* El Player ahora se reproduce automáticamente y en loop */}
                     <Player
-                        key={isEditIconHovered ? 'edit-active' : 'edit-inactive'} // Cambia la key para reiniciar la animación
-                        autoplay={isEditIconHovered} // Solo reproduce en hover
-                        loop={true} // Se repite mientras esté en hover (pinch sugiere loop)
+                        autoplay={true} 
+                        loop={true} 
                         src={editDocumentLottie}
-                        className="lottie-icon" // Puedes añadir una clase CSS si lo necesitas
-                        style={{ height: '30px', width: '30px', marginRight: '10px' }} // Ajusta el tamaño y el margen
+                        className="lottie-icon"
+                        style={{ height: '30px', width: '30px', marginRight: '10px' }}
                     />
                     Solicitud de Modificación
                     <button className="close-button" onClick={onClose}>&times;</button>
@@ -93,9 +85,6 @@ function ModificationRequestModal({ onClose }) {
                         <div className="modal-buttons">
                             <button type="submit" className="btn-send-modification">
                                 Enviar Modificación
-                            </button>
-                            <button type="button" className="btn-cancel-modification" onClick={onClose}>
-                                Cancelar
                             </button>
                         </div>
                     </form>

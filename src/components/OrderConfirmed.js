@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './OrderConfirmed.css';
+import '../../src/styles/OrderConfirmed.css';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 // Importa tus archivos Lottie

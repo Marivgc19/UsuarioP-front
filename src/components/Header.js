@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Header.css';
+import '../../src/styles/Header.css';
 import { Player } from '@lottiefiles/react-lottie-player';
 import truckAnimation from '../assets/lottie/wired-lineal-497-truck-delivery-loop-cycle.json';
 import logoImage from '../assets/lottie/logo.png';

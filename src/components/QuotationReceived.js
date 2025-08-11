@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './QuotationReceived.css';
+import '../../src/styles/QuotationReceived.css';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 // Importa tus archivos Lottie

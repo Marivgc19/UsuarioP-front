@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './CustomSelect.css';
+import '../../src/styles/CustomSelect.css';
 
 const CustomSelect = ({ label, options, selectedValue, onSelect }) => {
     const [isOpen, setIsOpen] = useState(false);
