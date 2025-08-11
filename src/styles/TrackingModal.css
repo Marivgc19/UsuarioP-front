@@ -236,3 +236,57 @@
     cursor: pointer;
     color: #888;
 }
+
+/* Estilos para elementos nuevos */
+.no-orders {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-style: italic;
+}
+
+.order-date {
+    color: #888;
+    font-size: 0.9em;
+    font-weight: normal;
+}
+
+.progress-text {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.progress-bar-container {
+    position: relative;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    height: 20px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+/* Mejorar responsive para nuevos elementos */
+@media (max-width: 768px) {
+    .order-date {
+        display: block;
+        margin-top: 5px;
+        font-size: 0.85em;
+    }
+    
+    .progress-text {
+        font-size: 0.75rem;
+        right: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .no-orders {
+        padding: 30px 15px;
+        font-size: 0.95rem;
+    }
+}

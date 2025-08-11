@@ -19,6 +19,27 @@ function App() {
     const [showModificationModal, setShowModificationModal] = useState(false);
     const [showPaymentSuccessNotification, setShowPaymentSuccessNotification] = useState(false);
     const [showSurveyModal, setShowSurveyModal] = useState(false); // New state for survey modal
+    const [orderData, setOrderData] = useState(null); // New state for order data
+    const [ordersList, setOrdersList] = useState([ // Estado global para lista de órdenes
+        {
+            id: 'ORD-2024-001234',
+            product: 'iPhone 15 Pro Max',
+            price: '1,319.00',
+            status: 'En Tránsito',
+            progress: 60,
+            statusColor: '#FFB300',
+            submittedAt: '2024-01-15T10:30:00.000Z'
+        },
+        {
+            id: 'ORD-2024-001233',
+            product: 'MacBook Air M2',
+            price: '1,199.00',
+            status: 'Entregado',
+            progress: 100,
+            statusColor: '#66BB6A',
+            submittedAt: '2024-01-10T14:20:00.000Z'
+        }
+    ]);
 
     // Dummy data for quotation
     const quotationDetails = {
@@ -43,9 +64,42 @@ function App() {
     const handleOpenSurvey = () => setShowSurveyModal(true); // New handler
     const handleCloseSurvey = () => setShowSurveyModal(false); // New handler
 
+    // Función para generar ID único de orden
+    const generateOrderId = () => {
+        const timestamp = Date.now();
+        const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+        return `ORD-2024-${timestamp.toString().slice(-6)}${randomNum}`;
+    };
+
+    // Función para agregar nueva orden a la lista
+    const addNewOrder = (formData) => {
+        const orderId = generateOrderId();
+        const productSummary = formData.cartItems.length === 1 
+            ? `${formData.cartItems.length} producto` 
+            : `${formData.cartItems.length} productos`;
+        
+        const newOrder = {
+            id: orderId,
+            product: productSummary,
+            price: 'Pendiente', // Precio pendiente hasta recibir cotización
+            status: 'Solicitud Enviada',
+            progress: 25,
+            statusColor: '#4CAF50', // Verde para solicitud enviada
+            submittedAt: formData.submittedAt,
+            cartItems: formData.cartItems,
+            deliveryType: formData.deliveryType,
+            deliveryVenezuela: formData.deliveryVenezuela
+        };
+
+        setOrdersList(prevOrders => [newOrder, ...prevOrders]); // Agregar al inicio de la lista
+        return orderId;
+    };
+
     // --- Step Transition Handlers ---
-    const handleFormSubmit = () => {
-        setCurrentStep(2);
+    const handleFormSubmit = (formData) => {
+        const newOrderId = addNewOrder(formData);
+        setOrderData({...formData, orderId: newOrderId});
+        setCurrentStep(5); // Saltar directo al tracking después de enviar la solicitud
     };
 
     const handleRejectProposal = () => {
@@ -122,7 +176,8 @@ function App() {
 
                 {currentStep === 5 && (
                     <OrderTracking
-                        orderId="ORD-2024-001234"
+                        orderId={orderData?.orderId || "ORD-2024-001234"}
+                        orderData={orderData}
                         onOpenSurvey={handleOpenSurvey} // Pass the new handler
                     />
                 )}
@@ -130,7 +185,7 @@ function App() {
             </div>
 
             {showChatModal && <ChatSupportModal onClose={handleCloseChat} />}
-            {showTrackingModal && <TrackingModal onClose={handleCloseTracking} />}
+            {showTrackingModal && <TrackingModal onClose={handleCloseTracking} ordersList={ordersList} />}
             {showModificationModal && <ModificationRequestModal onClose={handleCloseModification} />}
             {showPaymentSuccessNotification && <PaymentSuccessNotification />}
 

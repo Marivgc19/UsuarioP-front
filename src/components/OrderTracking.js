@@ -8,35 +8,49 @@ import purchaseLottie from '../assets/lottie/IWTFP3ADxQ.json';
 import airplaneLottie from '../assets/lottie/Airplane.json';
 import editDocumentIcon from '../assets/lottie/wired-flat-245-edit-document-hover-pinch.json';
 
-function OrderTracking({ orderId, onOpenSurvey }) {
+function OrderTracking({ orderId, orderData, onOpenSurvey }) {
+    // Generar fecha actual para la solicitud enviada
+    const currentDate = new Date().toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+
     // Dummy data for tracking steps, replace with actual data from backend
     const trackingSteps = [
         {
+            id: 'request_submitted',
+            label: 'Solicitud Enviada',
+            date: currentDate,
+            icon: editDocumentIcon,
+            color: 'green'
+        },
+        {
             id: 'payment_confirmed',
             label: 'Pago Confirmado',
-            date: '15/01/2024',
+            date: 'Pendiente',
             icon: checkmarkLottie,
-            color: 'green'
+            color: 'gray'
         },
         {
             id: 'product_purchased',
             label: 'Producto Comprado',
-            date: '16/01/2024',
+            date: 'Pendiente',
             icon: purchaseLottie,
-            color: 'blue'
+            color: 'gray'
         },
         {
             id: 'in_transit',
             label: 'En Tránsito',
-            date: 'Estimado: 25/01/2024',
+            date: 'Pendiente',
             icon: airplaneLottie,
-            color: 'orange'
+            color: 'gray'
         },
         // Add more steps here
     ];
 
-    const currentProgress = 60;
-    const currentStatusText = "Tu producto está en camino a nuestro almacén en Venezuela";
+    const currentProgress = 25;
+    const currentStatusText = "Tu solicitud ha sido enviada exitosamente. Pronto recibirás una cotización.";
 
     return (
         <div className="order-tracking-card">
@@ -81,6 +95,23 @@ function OrderTracking({ orderId, onOpenSurvey }) {
                     <span className="progress-percentage">{currentProgress}% Completado</span>
                 </div>
                 <p className="status-text">{currentStatusText}</p>
+                
+                {orderData && (
+                    <div className="order-summary">
+                        <h4>Resumen de tu Solicitud</h4>
+                        <div className="order-details">
+                            <p><strong>Productos solicitados:</strong> {orderData.cartItems?.length || 0} producto(s)</p>
+                            <p><strong>Tipo de envío:</strong> {
+                                orderData.deliveryType === 'doorToWarehouse' ? 'Puerta a Puerta' :
+                                orderData.deliveryType === 'air' ? 'Envío Aéreo' :
+                                orderData.deliveryType === 'maritime' ? 'Envío Marítimo' : 
+                                orderData.deliveryType
+                            }</p>
+                            <p><strong>Entrega en Venezuela:</strong> {orderData.deliveryVenezuela}</p>
+                            <p><strong>Fecha de solicitud:</strong> {currentDate}</p>
+                        </div>
+                    </div>
+                )}
             </div>
 
             <div className="tracking-actions">

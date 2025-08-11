@@ -108,17 +108,45 @@ function OrderRequestForm({ onSubmitForm }) {
             return;
         }
 
+        const formData = {
+            cartItems,
+            deliveryType,
+            deliveryVenezuela,
+            submittedAt: new Date().toISOString()
+        };
+
         console.log('Carrito:', cartItems);
         console.log('Tipo de envío:', deliveryType);
         console.log('Entrega en Venezuela:', deliveryVenezuela);
-        alert('Solicitud enviada (ver consola para datos). Pasando al siguiente paso...');
-        onSubmitForm();
+        alert('¡Solicitud enviada exitosamente! Ahora puedes seguir el progreso de tu pedido.');
+        onSubmitForm(formData);
     };
 
     const handleRemoveFromCart = (index) => {
         const newCartItems = [...cartItems];
         newCartItems.splice(index, 1);
         setCartItems(newCartItems);
+    };
+
+    const handleEditFromCart = (index) => {
+        const itemToEdit = cartItems[index];
+        
+        // Cargar los datos del producto a editar en el formulario
+        setRequestType(itemToEdit.requestType);
+        setProductUrl(itemToEdit.productUrl || '');
+        setProductImage(itemToEdit.productImage || null);
+        setProductDescription(itemToEdit.productDescription || '');
+        setQuantity(itemToEdit.quantity);
+        setTechnicalSpecs(itemToEdit.technicalSpecs || '');
+        
+        // Eliminar el elemento del carrito para que se pueda volver a agregar
+        handleRemoveFromCart(index);
+        
+        // Scroll al formulario
+        document.querySelector('.form-section').scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
     };
 
     const isActiveAnimation = (optionName) => {
@@ -200,7 +228,7 @@ function OrderRequestForm({ onSubmitForm }) {
                                 onChange={(e) => setProductUrl(e.target.value)}
                                 placeholder="https://ejemplo.com/producto"
                                 className="text-input"
-                                required
+                                required={cartItems.length === 0}
                             />
                         </div>
                     )}
@@ -244,7 +272,7 @@ function OrderRequestForm({ onSubmitForm }) {
                                 placeholder="Describe el producto detalladamente..."
                                 className="textarea-input"
                                 rows="5"
-                                required
+                                required={cartItems.length === 0}
                             ></textarea>
                         </div>
                     </div>
@@ -261,7 +289,7 @@ function OrderRequestForm({ onSubmitForm }) {
                             onChange={(e) => setQuantity(e.target.value)}
                             min="1"
                             className="text-input"
-                            required
+                            required={cartItems.length === 0}
                         />
                     </div>
                     <div className="form-group">
@@ -273,38 +301,80 @@ function OrderRequestForm({ onSubmitForm }) {
                             placeholder="Color, talla, modelo, características específicas, etc."
                             className="textarea-input"
                             rows="5"
-                            required
+                            required={cartItems.length === 0}
                         ></textarea>
                     </div>
                 </div>
 
-                <button type="button" className="add-to-cart-button" onClick={handleAddToCart}>
-                    <span className="add-to-cart-text">Agregar a la Caja</span>
-                    <Player
-                        autoplay={true}
-                        loop={true}
-                        src={woodenBoxLottie}
-                        className="add-to-cart-lottie"
-                        style={{ height: '24px', width: '24px' }}
-                    />
-                </button>
-
                 {/* Lista del carrito */}
-                {cartItems.length > 0 && (
-                    <div className="cart-section">
-                        <h3>Tu Caja</h3>
-                        <ul>
+                <div className="cart-section">
+                    <h3>Tu Caja</h3>
+                    {cartItems.length > 0 ? (
+                        <ul className="cart-items-list">
                             {cartItems.map((item, index) => (
                                 <li key={index} className="cart-item">
-                                    Producto {index + 1} - Cantidad: {item.quantity}
-                                    <button type="button" onClick={() => handleRemoveFromCart(index)}>
-                                        Eliminar
-                                    </button>
+                                    <div className="cart-item-content">
+                                        <div className="cart-item-main-info">
+                                            <div className="cart-item-header">
+                                                <span className="cart-item-title">Producto {index + 1}</span>
+                                                <span className="cart-item-quantity">Cantidad: {item.quantity}</span>
+                                            </div>
+                                            <div className="cart-item-details">
+                                                {item.requestType === 'link' && item.productUrl && (
+                                                    <span className="cart-item-url">
+                                                        URL: {item.productUrl.length > 40 ? item.productUrl.substring(0, 40) + '...' : item.productUrl}
+                                                    </span>
+                                                )}
+                                                {item.requestType === 'photo' && item.productDescription && (
+                                                    <span className="cart-item-description">
+                                                        Descripción: {item.productDescription.length > 40 ? item.productDescription.substring(0, 40) + '...' : item.productDescription}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="cart-item-actions">
+                                            <button 
+                                                type="button" 
+                                                className="action-button edit-button" 
+                                                onClick={() => handleEditFromCart(index)}
+                                                title="Editar producto"
+                                            >
+                                                <svg viewBox="0 0 24 24" className="action-icon">
+                                                    <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+                                                </svg>
+                                            </button>
+                                            <button 
+                                                type="button" 
+                                                className="action-button delete-button" 
+                                                onClick={() => handleRemoveFromCart(index)}
+                                                title="Eliminar producto"
+                                            >
+                                                <svg viewBox="0 0 24 24" className="action-icon">
+                                                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </li>
                             ))}
                         </ul>
-                    </div>
-                )}
+                    ) : (
+                        <div className="empty-cart">
+                            <p>Tu caja está vacía. Agrega productos para comenzar.</p>
+                        </div>
+                    )}
+                    
+                    <button type="button" className="add-to-cart-button" onClick={handleAddToCart}>
+                        <span className="add-to-cart-text">Agregar a la Caja</span>
+                        <Player
+                            autoplay={true}
+                            loop={true}
+                            src={woodenBoxLottie}
+                            className="add-to-cart-lottie"
+                            style={{ height: '24px', width: '24px' }}
+                        />
+                    </button>
+                </div>
 
                 {/* Opciones de envío y entrega en Venezuela */}
                 <div className="shipping-options">
@@ -401,10 +471,12 @@ function OrderRequestForm({ onSubmitForm }) {
                         </label>
                     </div>
 
-                    <DeliveryCarousel
-                        selectedValue={deliveryVenezuela}
-                        onSelect={setDeliveryVenezuela}
-                    />
+                    <div className="delivery-section">
+                        <DeliveryCarousel
+                            selectedValue={deliveryVenezuela}
+                            onSelect={setDeliveryVenezuela}
+                        />
+                    </div>
                     <button type="submit" className="submit-button">
                         Enviar Solicitud ✨
                     </button>

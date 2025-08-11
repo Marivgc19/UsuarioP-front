@@ -6,27 +6,11 @@ import '../../src/styles/TrackingModal.css';
 // Importa el archivo GIF directamente
 import packageGif from '../assets/lottie/package.gif'; // <--- Importa tu archivo GIF aquí
 
-function TrackingModal({ onClose }) {
+function TrackingModal({ onClose, ordersList }) {
     const [orderNumber, setOrderNumber] = useState('');
-    const [orders, setOrders] = useState([
-        {
-            id: 'ORD-2024-001234',
-            product: 'iPhone 15 Pro Max',
-            price: '1,319.00',
-            status: 'En Tránsito',
-            progress: 60, // Percentage for the progress bar
-            statusColor: '#FFB300' // Orange for 'En Tránsito'
-        },
-        {
-            id: 'ORD-2024-001233',
-            product: 'MacBook Air M2',
-            price: '1,199.00',
-            status: 'Entregado',
-            progress: 100, // 100% for delivered
-            statusColor: '#66BB6A' // Green for 'Entregado'
-        },
-        // Add more dummy data as needed
-    ]);
+    
+    // Usar la lista de órdenes que viene desde App.js
+    const orders = ordersList || [];
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -64,23 +48,42 @@ function TrackingModal({ onClose }) {
                 </div>
 
                 <div className="order-list">
-                    {orders.map((order) => (
-                        <div key={order.id} className="order-card" style={{ '--status-color': order.statusColor }}>
-                            <div className="order-card-header">
-                                <span className="order-id">{order.id}</span>
-                                <span className="order-status" style={{ backgroundColor: order.statusColor }}>
-                                    {order.status}
-                                </span>
-                            </div>
-                            <p className="order-details">{order.product} - ${order.price}</p>
-                            <div className="progress-bar-container">
-                                <div
-                                    className="progress-bar-fill"
-                                    style={{ width: `${order.progress}%`, backgroundColor: order.statusColor }}
-                                ></div>
-                            </div>
+                    {orders.length === 0 ? (
+                        <div className="no-orders">
+                            <p>No hay órdenes registradas aún.</p>
                         </div>
-                    ))}
+                    ) : (
+                        orders.map((order) => (
+                            <div key={order.id} className="order-card" style={{ '--status-color': order.statusColor }}>
+                                <div className="order-card-header">
+                                    <span className="order-id">{order.id}</span>
+                                    <span className="order-status" style={{ backgroundColor: order.statusColor }}>
+                                        {order.status}
+                                    </span>
+                                </div>
+                                <p className="order-details">
+                                    {order.product} - ${order.price}
+                                    {order.cartItems && (
+                                        <span className="order-date">
+                                            {' • '}
+                                            {new Date(order.submittedAt).toLocaleDateString('es-ES', {
+                                                day: '2-digit',
+                                                month: '2-digit',
+                                                year: 'numeric'
+                                            })}
+                                        </span>
+                                    )}
+                                </p>
+                                <div className="progress-bar-container">
+                                    <div
+                                        className="progress-bar-fill"
+                                        style={{ width: `${order.progress}%`, backgroundColor: order.statusColor }}
+                                    ></div>
+                                    <span className="progress-text">{order.progress}%</span>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
         </div>
