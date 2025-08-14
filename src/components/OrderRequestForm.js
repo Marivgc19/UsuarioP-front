@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import '../../src/styles/OrderRequestForm.css';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { supabase } from '../services/supabaseClient';
 
 import DeliveryCarousel from './DeliveryCarousel';
+import { generateOrderPDF } from '../utils/generateOrderPDF';
 
 import airPlaneLottie from '../assets/lottie/FTQoLAnxbj.json';
 import cargoShipLottie from '../assets/lottie/wired-flat-1337-cargo-ship-hover-pinch.json';
@@ -11,7 +13,15 @@ import cameraLottie from '../assets/lottie/wired-flat-61-camera-hover-flash.json
 import folderLottie from '../assets/lottie/wired-flat-120-folder-hover-adding-files.json';
 import linkLottie from '../assets/lottie/wired-flat-11-link-unlink-hover-bounce.json';
 
-function OrderRequestForm({ onSubmitForm }) {
+function OrderRequestForm() {
+    // Función para generar el nombre de la carpeta del pedido
+    // nombreUsuario debe ser pasado en vez de usuario (id)
+    function generatePedidoFolder(pedidoId, fecha, nombreUsuario, tipoEntrega) {
+        // fecha legible: yyyy-MM-dd
+        const d = new Date();
+        const legibleFecha = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        return `pedido-${pedidoId}-${legibleFecha}-${nombreUsuario}-${tipoEntrega}`;
+    }
     const [requestType, setRequestType] = useState('link');
     const [productUrl, setProductUrl] = useState('');
     const [productImage, setProductImage] = useState(null);
@@ -24,7 +34,7 @@ function OrderRequestForm({ onSubmitForm }) {
     const [deliveryType, setDeliveryType] = useState('');
     const [deliveryVenezuela, setDeliveryVenezuela] = useState('');
 
-    const [hoveredDeliveryOption, setHoveredDeliveryOption] = useState(null);
+    const [hoveredDeliveryOption] = useState(null); // eslint-disable-line no-unused-vars
     const [hoveredShippingOption, setHoveredShippingOption] = useState(null);
     const [isFolderHovered, setIsFolderHovered] = useState(false);
     const [isCameraHovered, setIsCameraHovered] = useState(false);
@@ -89,37 +99,76 @@ function OrderRequestForm({ onSubmitForm }) {
         setTechnicalSpecs('');
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (cartItems.length === 0) {
             alert('Por favor, agrega al menos un producto a tu caja.');
             return;
         }
-
         if (!deliveryType) {
             alert('Por favor, selecciona un tipo de envío.');
             return;
         }
-
-        // 6. Validar la opción de entrega en Venezuela
         if (!deliveryVenezuela) {
             alert('Por favor, selecciona una opción de entrega en Venezuela.');
             return;
         }
-
-        const formData = {
+        // Generar datos para la carpeta del pedido
+    const pedidoId = Date.now();
+    const fecha = new Date().toISOString().slice(0,10).replace(/-/g, '');
+    const usuario = 'fc3f575f-f625-4902-8cbf-d60b9aeb7ee7'; // client_id de prueba
+    // Si el tipo de envío es 'maritime', usar 'maritime' como carpeta, si no, usar deliveryVenezuela
+        let pedidoFolder;
+        if (deliveryType === 'maritime') {
+            pedidoFolder = `maritime/${generatePedidoFolder(pedidoId, fecha, usuario, deliveryVenezuela)}`;
+        } else if (deliveryType === 'air') {
+            pedidoFolder = `air/${generatePedidoFolder(pedidoId, fecha, usuario, deliveryVenezuela)}`;
+        } else if (deliveryType === 'doorToWarehouse') {
+            pedidoFolder = `door-to-door/${generatePedidoFolder(pedidoId, fecha, usuario, deliveryVenezuela)}`;
+        } else {
+            pedidoFolder = generatePedidoFolder(pedidoId, fecha, usuario, deliveryVenezuela);
+        }
+        // Generar PDF del pedido y subirlo al bucket
+        const pdfBlob = await generateOrderPDF({
+            pedidoId,
+            fecha,
+            nombreUsuario: usuario, // Cambia a nombre real si lo tienes
+            tipoEntrega: deliveryVenezuela,
             cartItems,
             deliveryType,
-            deliveryVenezuela,
-            submittedAt: new Date().toISOString()
+            deliveryVenezuela
+        });
+        const pdfFileName = `pedido-${pedidoId}.pdf`;
+        const { error: pdfError } = await supabase.storage
+            .from('orders')
+            .upload(`${pedidoFolder}/${pdfFileName}`, pdfBlob);
+        if (pdfError) {
+            alert('Hubo un error al subir el PDF al storage. Intenta de nuevo.');
+        }
+        // Construir arrays de imágenes y links (solo nombres)
+        const imgsArr = cartItems.filter(p => p.productImage).map(p => p.productImage.name);
+        const imgsValue = imgsArr.length > 0 ? imgsArr : [];
+        const linksArr = cartItems.filter(p => p.productUrl).map(p => p.productUrl);
+        const orderPayload = {
+            client_id: usuario,
+            state: 1,
+            asignedEChina: '822e0db7-ce0a-49ce-b060-c0991078815e',
+            asignedEVzla: null,
+            order_origin: 'vzla',
+            imgs: imgsValue,
+            links: linksArr,
+            shippingType: deliveryType,
+            deliveryType: deliveryVenezuela
         };
-
-        console.log('Carrito:', cartItems);
-        console.log('Tipo de envío:', deliveryType);
-        console.log('Entrega en Venezuela:', deliveryVenezuela);
+    console.log('Order payload (real):', JSON.stringify(orderPayload, null, 2));
+        const { error: dbError } = await supabase
+            .from('orders')
+            .insert([orderPayload]);
+        if (dbError) {
+            alert('Hubo un error al guardar el pedido en la base de datos: ' + dbError.message);
+            return;
+        }
         alert('¡Solicitud enviada exitosamente! Ahora puedes seguir el progreso de tu pedido.');
-        onSubmitForm(formData);
     };
 
     const handleRemoveFromCart = (index) => {
@@ -145,16 +194,61 @@ function OrderRequestForm({ onSubmitForm }) {
         // Scroll al formulario
         document.querySelector('.form-section').scrollIntoView({ 
             behavior: 'smooth', 
-            block: 'start' 
+            block: 'start',
         });
-    };
+    // Función para generar el nombre de la carpeta del pedido
+        // nombreUsuario debe ser pasado en vez de usuario (id)
+        function generatePedidoFolder(pedidoId, fecha, nombreUsuario, tipoEntrega) {
+            // fecha legible: yyyy-MM-dd
+            const d = new Date();
+            const legibleFecha = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+            return `pedido-${pedidoId}-${legibleFecha}-${nombreUsuario}-${tipoEntrega}`;
+        }
 
-    const isActiveAnimation = (optionName) => {
-        return hoveredDeliveryOption === optionName || deliveryType === optionName;
-    };
+    // Función para subir cada producto al storage
+        /*
+        async function uploadProductToStorage(product, pedidoFolder) {
+            const uniqueId = Date.now() + '-' + Math.floor(Math.random() * 10000);
+            if (product.productImage) {
+                const imageFileName = `${uniqueId}-${product.productImage.name}`;
+                const { error: fotoError } = await supabase.storage
+                    .from('orders')
+                    .upload(`${pedidoFolder}/${imageFileName}`, product.productImage);
+                if (fotoError) {
+                    console.error('Error al subir la foto:', fotoError.message);
+                    return false;
+                }
+                product._uploadedImageName = imageFileName; // Guardar el nombre para el payload
+            }
+            let infoContent = '';
+            let infoFileName = '';
+            if (product.productImage) {
+                infoFileName = `info_foto_${uniqueId}.txt`;
+                infoContent = `Descripción: ${product.productDescription}\nCantidad: ${product.quantity}`;
+            } else if (product.productUrl) {
+                infoFileName = `info_url_${uniqueId}.txt`;
+                infoContent = `URL: ${product.productUrl}\nDescripción: ${product.productDescription}\nCantidad: ${product.quantity}`;
+            }
+            const infoBlob = new Blob([infoContent], { type: 'text/plain' });
+            const { error: infoError } = await supabase.storage
+                .from('orders')
+                .upload(`${pedidoFolder}/${infoFileName}`, infoBlob);
+            if (infoError) {
+                console.error('Error al subir el archivo de información:', infoError.message);
+                return false;
+            }
+            return true;
+        }
+        */
+
+    // eslint-disable-next-line
+    // const isActiveAnimation = (optionName) => {
+    //     return hoveredDeliveryOption === optionName || deliveryType === optionName;
+    // };
+    }
 
     return (
-        <div className="order-request-card">
+    <div className="order-request-card">
             <h2 className="card-title">Solicitud de Pedido</h2>
             <p className="card-subtitle">Cuéntanos qué producto deseas importar</p>
 
@@ -409,7 +503,6 @@ function OrderRequestForm({ onSubmitForm }) {
                                 </div>
                             </div>
                         </label>
-                        
                         <label
                             className={`shipping-option ${deliveryType === 'air' ? 'selected' : ''}`}
                             onMouseEnter={() => setHoveredShippingOption('air')}
@@ -439,7 +532,6 @@ function OrderRequestForm({ onSubmitForm }) {
                                 </div>
                             </div>
                         </label>
-                        
                         <label
                             className={`shipping-option ${deliveryType === 'maritime' ? 'selected' : ''}`}
                             onMouseEnter={() => setHoveredShippingOption('maritime')}
@@ -485,5 +577,4 @@ function OrderRequestForm({ onSubmitForm }) {
         </div>
     );
 }
-
 export default OrderRequestForm;
